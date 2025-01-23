@@ -1,9 +1,10 @@
+import { AuthContextProvider } from "@/context/use-auth-context";
 import React, { FC } from "react";
 
 const SignUpFormProvider: FC<{ children: React.ReactNode }> = ({
-  children
+  children,
 }) => {
-  return <div></div>;
+  return <AuthContextProvider>{children}</AuthContextProvider>;
 };
 
 export default SignUpFormProvider;
