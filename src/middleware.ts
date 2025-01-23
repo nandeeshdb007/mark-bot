@@ -1,13 +1,10 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { authMiddleware } from '@clerk/nextjs'
 
 export default authMiddleware({
-  publicRoutes: ["/", "auth(.*)", "portal(.*)"],
-  ignoredRoutes: ["/chatbot"],
-});
+  publicRoutes: ['/', '/auth(.*)', '/portal(.*)', '/images(.*)'],
+  ignoredRoutes: ['/chatbot'],
+})
 
-export const congfig = {
-  matcher: [
-    '/((?!.+.[w]+$|_next).*)','/',
-    "/(api|trpc)(.*)",
-  ],
-};
+export const config = {
+  matcher: ['/((?!.+.[w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+}
