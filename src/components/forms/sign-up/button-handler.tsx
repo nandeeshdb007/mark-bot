@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useAuthContextHook } from "@/context/use-auth-context";
 import { useSignUpForm } from "@/hooks/sign-up/use-sign-up";
 import Link from "next/link";
-import React, { FC } from "react";
+import React from "react";
 import { useFormContext } from "react-hook-form";
 
 const ButtonHandler = () => {
