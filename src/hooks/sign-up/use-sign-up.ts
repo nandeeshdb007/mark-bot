@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useToast } from "../use-toast";
 import { useSignUp } from "@clerk/nextjs";
@@ -90,5 +91,5 @@ export const useSignUpForm = () => {
     }
   );
 
-  return { methods, loading, onGeneratedOtp };
+  return { methods, loading, onGeneratedOtp, handleSubmit };
 };
