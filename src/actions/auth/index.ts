@@ -45,7 +45,7 @@ export const onLoginUser = async () => {
   if (!user) redirectToSignIn();
   else {
     try {
-      const authenticated = await client.user.findUnique({
+      const autenticated = await client.user.findUnique({
         where: {
           clerkId: user.id,
         },
@@ -55,12 +55,13 @@ export const onLoginUser = async () => {
           type: true,
         },
       });
-      if (authenticated) {
+
+      if (autenticated) {
         const domains = await onGetAllAccountDomains();
-        return { status: 200, user: authenticated, domain: domains?.domains };
+        return { status: 200, user: autenticated, domains: domains?.domains };
       }
     } catch (error) {
-      return { status: 400 };
+      console.log("onLoginUser", error);
     }
   }
 };
