@@ -16,21 +16,21 @@ const DocumentsIcon = (props: Props) => {
         stroke="#636363"
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.90833 4.20837C10.2667 6.50837 12.1333 8.26671 14.45 8.50004"
         stroke="#636363"
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M2.5 18.3334H17.5"
         stroke="#636363"
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

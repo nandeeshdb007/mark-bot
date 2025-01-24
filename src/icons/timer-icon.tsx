@@ -16,14 +16,14 @@ const TimerIcon = (props: Props) => {
         stroke="#636363"
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.7584 12.65L11.1751 11.1084C10.7251 10.8417 10.3584 10.2 10.3584 9.67503V6.25836"
         stroke="#636363"
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

@@ -1,81 +1,102 @@
 import CalIcon from "@/icons/cal-icon";
 import ChatIcon from "@/icons/chat-icon";
+import DashboardIcon from "@/icons/dashboard-icon";
 import EmailIcon from "@/icons/email-icon";
 import HelpDeskIcon from "@/icons/help-desk-icon";
 import IntegrationsIcon from "@/icons/integrations-icon";
 import SettingsIcon from "@/icons/settings-icon";
 import StarIcon from "@/icons/star-icon";
 import TimerIcon from "@/icons/timer-icon";
-import DashboardIcon from "@/icons/dashboard-icon";
 import { JSX } from "react";
 
-// Type definitions
-type SidebarMenuProps = {
+type SIDE_BAR_MENU_PROPS = {
   label: string;
   icon: JSX.Element;
   path: string;
 };
 
-type TabsMenuProps = {
+export const SIDE_BAR_MENU: SIDE_BAR_MENU_PROPS[] = [
+  {
+    label: "Dashboard",
+    icon: <DashboardIcon />,
+    path: "dashboard",
+  },
+  {
+    label: "Conversations",
+    icon: <ChatIcon />,
+    path: "conversation",
+  },
+  {
+    label: "Integrations",
+    icon: <IntegrationsIcon />,
+    path: "integration",
+  },
+  {
+    label: "Settings",
+    icon: <SettingsIcon />,
+    path: "settings",
+  },
+  {
+    label: "Appointments",
+    icon: <CalIcon />,
+    path: "appointment",
+  },
+  {
+    label: "Email Marketing",
+    icon: <EmailIcon />,
+    path: "email-marketing",
+  },
+];
+
+type TABS_MENU_PROPS = {
   label: string;
   icon?: JSX.Element;
 };
 
-// Icon mappings to avoid redundancy
-const Icons = {
-  dashboard: <DashboardIcon />,
-  chat: <ChatIcon />,
-  email: <EmailIcon />,
-  helpDesk: <HelpDeskIcon />,
-  integrations: <IntegrationsIcon />,
-  settings: <SettingsIcon />,
-  star: <StarIcon />,
-  timer: <TimerIcon />,
-  calendar: <CalIcon />,
-};
+export const TABS_MENU: TABS_MENU_PROPS[] = [
+  {
+    label: "unread",
+    icon: <EmailIcon />,
+  },
+  {
+    label: "all",
+    icon: <EmailIcon />,
+  },
+  {
+    label: "expired",
+    icon: <TimerIcon />,
+  },
+  {
+    label: "starred",
+    icon: <StarIcon />,
+  },
+];
 
-// Sidebar menu configuration
-export const SIDE_BAR_MENU: SidebarMenuProps[] = [
-  { label: "Dashboard", icon: Icons.dashboard, path: "dashboard" },
-  { label: "Conversations", icon: Icons.chat, path: "conversations" },
-  { label: "Integrations", icon: Icons.integrations, path: "integrations" },
-  { label: "Settings", icon: Icons.settings, path: "settings" },
-  { label: "Appointments", icon: Icons.calendar, path: "appointments" },
-  { label: "Email Marketing", icon: Icons.email, path: "email-marketing" },
-] as const;
+export const HELP_DESK_TABS_MENU: TABS_MENU_PROPS[] = [
+  {
+    label: "help desk",
+  },
+  {
+    label: "questions",
+  },
+];
 
-// Tabs menu configuration
-export const TABS_MENU: TabsMenuProps[] = [
-  { label: "unread", icon: Icons.email },
-  { label: "all", icon: Icons.email },
-  { label: "expired", icon: Icons.timer },
-  { label: "starred", icon: Icons.star },
-] as const;
-
-// Help Desk tabs
-export const HELP_DESK_TABS_MENU: TabsMenuProps[] = [
-  { label: "help desk" },
-  { label: "questions" },
-] as const;
-
-// Appointment table headers
 export const APPOINTMENT_TABLE_HEADER = [
   "Name",
-  "Requested Time",
+  "RequestedTime",
   "Added Time",
   "Domain",
-] as const;
+];
 
-// Email marketing table headers
-export const EMAIL_MARKETING_HEADER = [
-  "ID",
-  "Email",
-  "Answers",
-  "Domain",
-] as const;
+export const EMAIL_MARKETING_HEADER = ["Id", "Email", "Answers", "Domain"];
 
-// Bot tabs menu configuration
-export const BOT_TABS_MENU: TabsMenuProps[] = [
-  { label: "chat", icon: Icons.chat },
-  { label: "helpdesk", icon: Icons.helpDesk },
-] as const;
+export const BOT_TABS_MENU: TABS_MENU_PROPS[] = [
+  {
+    label: "chat",
+    icon: <ChatIcon />,
+  },
+  {
+    label: "helpdesk",
+    icon: <HelpDeskIcon />,
+  },
+];
