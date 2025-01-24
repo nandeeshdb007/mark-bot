@@ -1,3 +1,4 @@
+"use client"
 import { Loader } from "@/components/loader";
 import { AuthContextProvider } from "@/context/use-auth-context";
 import { useSignUpForm } from "@/hooks/sign-up/use-sign-up";
