@@ -8,7 +8,6 @@ const TypeSelectionForm: FC<{
   userType: "owner" | "student";
   setUserType: React.Dispatch<React.SetStateAction<"owner" | "student">>;
 }> = ({ register, userType, setUserType }) => {
-  console.log("userType", userType);
   return (
     <>
       <h2 className="text-gravel md:text-4xl font-bold">Create an account</h2>
