@@ -10,6 +10,11 @@ export type UserRegistrationProps = {
   otp: string;
 };
 
+export type UserLoginProps = {
+  email: string;
+  password: string;
+};
+
 export const UserRegistrationSchema: ZodType<UserRegistrationProps> = z
   .object({
     type: z.string().min(1),
@@ -39,3 +44,8 @@ export const UserRegistrationSchema: ZodType<UserRegistrationProps> = z
     message: "Your emails not match",
     path: ["confirmEmail"],
   });
+
+export const UserLoginSchema: ZodType<UserLoginProps> = z.object({
+  email: z.string().email({ message: "Incorrect email format" }),
+  password: z.string(),
+});
