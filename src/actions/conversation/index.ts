@@ -1,6 +1,6 @@
 import { client } from "@/lib/prisma";
 
-export const onActivateRealTime = async (id: string, state: boolean) => {
+export const onToggleRealtine = async (id: string, state: boolean) => {
   try {
     const chatRoom = await client.chatRoom.update({
       where: {
@@ -24,6 +24,22 @@ export const onActivateRealTime = async (id: string, state: boolean) => {
       };
     }
   } catch (error) {
-    console.log("onActivateRealTime", error);
+    console.log("onToggleRealtine", error);
+  }
+};
+
+export const onGetConversationMode = async (id: string) => {
+  try {
+    const mode = await client.chatRoom.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        live: true,
+      },
+    });
+    return mode;
+  } catch (error) {
+    console.log("onGetConversationMode", error);
   }
 };
