@@ -7,7 +7,7 @@ export const onCompleteUserResgistration = async (
   fullName: string,
   clerkId: string,
   type: string
-) => {F
+) => {
   try {
     const registred = await client.user.create({
       data: {
