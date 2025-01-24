@@ -50,7 +50,7 @@ export const useSignUpForm = () => {
 
   const onHandleSubmit = methods.handleSubmit(
     async (values: UserRegistrationProps) => {
-      console.log("cliecked")
+      console.log("cliecked");
       if (!isLoaded) return;
 
       try {
@@ -60,12 +60,12 @@ export const useSignUpForm = () => {
         });
 
         if (completeSignUp.status !== "complete") {
-          console.log("not good")
+          console.log("not good");
           return { message: "Something went wrong!" };
         }
 
         if (completeSignUp.status == "complete") {
-          console.log("came")
+          console.log("came");
           if (!signUp.createdUserId) return;
 
           const registered = await onCompleteUserResgistration(
@@ -80,7 +80,7 @@ export const useSignUpForm = () => {
             });
 
             setLoading(false);
-            console.log("redidctiong")
+            console.log("redidctiong");
             router.push("/dashboard");
           }
 
