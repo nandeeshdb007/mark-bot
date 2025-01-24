@@ -5,8 +5,7 @@ import {
   onGetConversationMode,
   onToggleRealtine,
 } from "@/actions/conversation";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
+import { usePathname,useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useClerk } from "@clerk/nextjs";
 
