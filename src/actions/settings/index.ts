@@ -1,38 +1,28 @@
-"use server"
 import { client } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs";
 
-export const onGetAllAccountDomains = async () => {
-  const user = await currentUser();
-  if (!user) return;
+export const onGetSubcriptionPlan = async () => {
   try {
-    const domains = await client.user.findUnique({
+    const user = await currentUser();
+    if (!user) return;
+
+    const plan = await client.user.findUnique({
       where: {
         clerkId: user.id,
       },
       select: {
-        id: true,
-        domains: {
+        subscription: {
           select: {
-            name: true,
-            icon: true,
-            id: true,
-            customer: {
-              select: {
-                chatRoom: {
-                  select: {
-                    id: true,
-                    live: true,
-                  },
-                },
-              },
-            },
+            plan: true,
           },
         },
       },
     });
-    return { ...domains };
+
+    if (plan) {
+      return plan.subscription?.plan;
+    }
   } catch (error) {
-    console.log(error);
+    console.log("onGetSubcriptionPlan", error);
   }
 };
