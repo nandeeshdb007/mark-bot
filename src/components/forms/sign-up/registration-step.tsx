@@ -32,7 +32,7 @@ const RegistrationFormStep = () => {
         />
       );
     case 2:
-      return <DetailForm />;
+      return <DetailForm errors={errors} register={register} />;
     case 3:
   }
   return <div></div>;

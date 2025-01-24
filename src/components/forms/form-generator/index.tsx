@@ -42,7 +42,7 @@ const FormGenerator = ({
             errors={errors}
             name={name}
             render={({ message }: { message: string }) => (
-              <p className="text-red-400 mt-2 ">
+              <p className="text-red-400 mt-1 text-sm ">
                 {message === "Required" ? "" : message}
               </p>
             )}
@@ -66,7 +66,7 @@ const FormGenerator = ({
             errors={errors}
             name={name}
             render={({ message }: { message: string }) => (
-              <p className="text-red-400 mt-2 ">
+              <p className="text-red-400 mt-1 text-sm ">
                 {message === "Required" ? "" : message}
               </p>
             )}
@@ -89,7 +89,7 @@ const FormGenerator = ({
             errors={errors}
             name={name}
             render={({ message }: { message: string }) => (
-              <p className="text-red-400 mt-2 ">
+              <p className="text-red-400 mt-1 text-sm ">
                 {message === "Required" ? "" : message}
               </p>
             )}
