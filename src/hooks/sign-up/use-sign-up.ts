@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { useToast } from "../use-toast";
-import { useSignUp } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+"use client";
 import {
   UserRegistrationProps,
   UserRegistrationSchema,
 } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSignUp } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useToast } from "../use-toast";
 import { onCompleteUserResgistration } from "@/actions/auth";
 
 export const useSignUpForm = () => {
@@ -23,19 +23,22 @@ export const useSignUpForm = () => {
     },
     mode: "onChange",
   });
+
   const onGeneratedOtp = async (
     email: string,
     password: string,
     onNext: React.Dispatch<React.SetStateAction<number>>
   ) => {
     if (!isLoaded) return;
+
     try {
       await signUp.create({
         emailAddress: email,
-        password,
+        password: password,
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
       onNext((prev) => prev + 1);
     } catch (error: any) {
       toast({
@@ -45,8 +48,9 @@ export const useSignUpForm = () => {
     }
   };
 
-  const handleSubmit = methods.handleSubmit(
+  const onHandleSubmit = methods.handleSubmit(
     async (values: UserRegistrationProps) => {
+      console.log("cliecked")
       if (!isLoaded) return;
 
       try {
@@ -56,10 +60,12 @@ export const useSignUpForm = () => {
         });
 
         if (completeSignUp.status !== "complete") {
-          return { message: "something went wrong" };
+          console.log("not good")
+          return { message: "Something went wrong!" };
         }
 
-        if (completeSignUp.status === "complete") {
+        if (completeSignUp.status == "complete") {
+          console.log("came")
           if (!signUp.createdUserId) return;
 
           const registered = await onCompleteUserResgistration(
@@ -68,17 +74,20 @@ export const useSignUpForm = () => {
             values.type
           );
 
-          if (registered?.status === 200 && registered.user) {
+          if (registered?.status == 200 && registered.user) {
             await setActive({
               session: completeSignUp.createdSessionId,
             });
+
             setLoading(false);
+            console.log("redidctiong")
             router.push("/dashboard");
           }
-          if (registered?.status === 400) {
+
+          if (registered?.status == 400) {
             toast({
               title: "Error",
-              description: "Something went wrong",
+              description: "Something went wrong!",
             });
           }
         }
@@ -90,6 +99,10 @@ export const useSignUpForm = () => {
       }
     }
   );
-
-  return { methods, loading, onGeneratedOtp, handleSubmit };
+  return {
+    methods,
+    onHandleSubmit,
+    onGeneratedOtp,
+    loading,
+  };
 };

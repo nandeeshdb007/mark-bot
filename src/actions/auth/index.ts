@@ -27,7 +27,7 @@ export const onCompleteUserResgistration = async (
 
     if (registred) {
       return {
-        status: 2000,
+        status: 200,
         user: registred,
       };
     }
