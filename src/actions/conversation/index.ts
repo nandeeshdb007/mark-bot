@@ -114,3 +114,18 @@ export const onGetChatMessages = async (id: string) => {
     console.log("onGetChatMessages", error);
   }
 };
+
+export const onViewUnReadMessages = async (id: string) => {
+  try {
+    await client.chatMessage.updateMany({
+      where: {
+        chatRoomId: id,
+      },
+      data: {
+        seen: true,
+      },
+    });
+  } catch (error) {
+    console.log("onViewUnReadMessages", error);
+  }
+};
