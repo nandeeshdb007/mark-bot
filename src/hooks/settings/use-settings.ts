@@ -28,7 +28,6 @@ import {
 } from "@/schemas/settings.schema";
 import { useRouter } from "next/navigation";
 import { UploadClient } from "@uploadcare/upload-client";
-import { metadata } from "../../app/layout";
 
 const upload = new UploadClient({
   publicKey: process.env.NEXT_PUBLIC_UPLOAD_CARE_PUBLIC_KEY as string,
