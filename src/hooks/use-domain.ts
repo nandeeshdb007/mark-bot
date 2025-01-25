@@ -1,14 +1,15 @@
-"use client";
+import { onIntegrateDomain } from "@/actions/settings";
 import { AddDomainSchema } from "@/schemas/settings.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadClient } from "@uploadcare/upload-client";
 import { usePathname, useRouter } from "next/navigation";
+
+import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useToast } from "./use-toast";
-import { useEffect, useState } from "react";
-import { onIntegrateDomain } from "@/actions/settings";
+
 const upload = new UploadClient({
-  publicKey: process.env.NEXT_PUBLIC_UPLOAD_SECRET_KEY as string,
+  publicKey: process.env.NEXT_PUBLIC_UPLOAD_CARE_PUBLIC_KEY as string,
 });
 
 export const useDomain = () => {
@@ -21,15 +22,15 @@ export const useDomain = () => {
     resolver: zodResolver(AddDomainSchema),
   });
 
-  const pathName = usePathname();
+  const pathname = usePathname();
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const [isDomain, setIsDomain] = useState<string | undefined>(undefined);
   const router = useRouter();
 
   useEffect(() => {
-    setIsDomain(pathName.split("/").pop());
-  }, [pathName]);
+    setIsDomain(pathname.split("/").pop());
+  }, [pathname]);
 
   const onAddDomain = handleSubmit(async (values: FieldValues) => {
     setLoading(true);
@@ -39,7 +40,7 @@ export const useDomain = () => {
       reset();
       setLoading(false);
       toast({
-        title: domain.status == 200 ? "Sucess" : "Error",
+        title: domain.status == 200 ? "Success" : "Error",
         description: domain.message,
       });
       router.refresh();
