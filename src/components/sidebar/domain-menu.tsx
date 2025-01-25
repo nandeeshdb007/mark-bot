@@ -25,7 +25,7 @@ type Props = {
 const DomainMenu = ({ domains, min }: Props) => {
   const { register, onAddDomain, loading, errors, isDomain } = useDomain();
   return (
-    <div className={cn("flex flex-col gap-3", min ? "mt-6" : ",t-3")}>
+    <div className={cn("flex flex-col gap-3", min ? "mt-6" : "mt-4")}>
       <div className="flex justify-between w-full items-center">
         {!min && <p className="text-xs text-gray-500">DOMAINS</p>}
         <AppDrawer
