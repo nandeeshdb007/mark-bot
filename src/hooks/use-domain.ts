@@ -1,5 +1,5 @@
 import { onIntegrateDomain } from "@/actions/settings";
-import { AddDomainSchema } from "@/schemas/settings.schema";
+import { AddDomainSchema, DomainSettingsProps } from "@/schemas/settings.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UploadClient } from "@uploadcare/upload-client";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ export const useDomain = () => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FieldValues>({
+  } = useForm<DomainSettingsProps>({
     resolver: zodResolver(AddDomainSchema),
   });
 

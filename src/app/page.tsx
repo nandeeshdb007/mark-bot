@@ -12,21 +12,9 @@ import clsx from "clsx";
 import { Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import parse from "html-react-parser";
-import { getMonthName } from "@/lib/utils";
 import { pricingCards } from "@/constant/landing-page";
-import { onGetBlogPosts } from "@/actions/landing";
 
 export default async function Home() {
-  const posts:
-    | {
-        id: string;
-        title: string;
-        image: string;
-        content: string;
-        createdAt: Date;
-      }[] = (await onGetBlogPosts()) || [];
-  console.log(posts);
   return (
     <main>
       <NavBar />

@@ -68,7 +68,7 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
+  /* .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -104,7 +104,7 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+  } */
 }
 
 @layer base {
@@ -171,7 +171,7 @@ body {
 }
 
 .my-config {
-  --darkmode: 0;
+  /* --darkmode: 0; */
   --h-accent: 30;
   --s-accent: 100%;
   --l-accent: 50%;
