@@ -1,8 +1,9 @@
-"use client"
+"use client";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/hooks/settings/use-settings";
 import React from "react";
 import DomainsUpdate from "./domains-update";
+import CodeSnippet from "./code-snippet";
 
 type Props = {
   id: string;
@@ -30,8 +31,8 @@ const SettingsForm = ({ id, name, chatBot, plan }: Props) => {
         <h2 className="font-bold text-2xl">Domain Settings</h2>
         <Separator orientation="horizontal" />
         <DomainsUpdate name={name} register={register} errors={errors} />
+        <CodeSnippet id={id} />
       </div>
-
     </form>
   );
 };
