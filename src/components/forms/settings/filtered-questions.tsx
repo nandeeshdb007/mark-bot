@@ -34,6 +34,7 @@ const FilterQuestions = ({ id }: Props) => {
               message="Add a question that you want your chatbot to ask"
             />
             <FormGenerator
+              id={"filter-question"}
               inputType="input"
               register={register}
               errors={errors}
@@ -49,6 +50,7 @@ const FilterQuestions = ({ id }: Props) => {
               message="The anwer for the question above"
             />
             <FormGenerator
+            id={"filter-question-answer"}
               inputType="textarea"
               register={register}
               errors={errors}
