@@ -26,7 +26,7 @@ type Props = {
 const DomainMenu = ({ domains, min }: Props) => {
   const { register, onAddDomain, loading, errors, isDomain } = useDomain();
   return (
-    <div className={cn("flex flex-col gap-3", min ? "mt-6" : "mt-4")}>
+    <div className={cn("flex flex-col 0 gap-3", min ? "mt-6" : "mt-4")}>
       <div className="flex justify-between w-full items-center">
         {!min && <p className="text-xs text-gray-500">DOMAINS</p>}
         <AppDrawer
@@ -72,7 +72,7 @@ const DomainMenu = ({ domains, min }: Props) => {
               href={`/settings/${domain.name.split(".")[0]}`}
               key={domain.id}
               className={cn(
-                "flex gap-3 items-center justify-center hover:bg-white rounded-lg transition duration-100 ease-in-out cursor-pointer",
+                "flex gap-3 items-start justify-start hover:bg-white rounded-full transition duration-100 ease-in-out cursor-pointer",
                 !min ? "p-2" : "py-2",
                 domain.name.split(".")[0] == isDomain && "bg-white"
               )}
