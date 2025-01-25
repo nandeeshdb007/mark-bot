@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ZodType, z } from "zod";
 import { ACCEPTED_FILE_TYPES, MAX_UPLOAD_SIZE } from "./settings.schema";
 
