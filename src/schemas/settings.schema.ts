@@ -8,9 +8,13 @@ export type DomainSettingsProps = {
 };
 
 export type HelpDeskQuestionsProps = {
-  question: string
-  answer: string
-}
+  question: string;
+  answer: string;
+};
+
+export type FilterQuestionsProps = {
+  question: string;
+};
 
 export const MAX_UPLOAD_SIZE = 1024 * 1024 * 2; // 2MB
 export const ACCEPTED_FILE_TYPES = ["image/png", "image/jpg", "image/jpeg"];
@@ -57,7 +61,8 @@ export const DomainSettingsSchema = z
     (schema) => {
       if (schema.image?.length) {
         if (
-          schema.image?.[0]?.type && ACCEPTED_FILE_TYPES.includes(schema.image[0].type) &&
+          schema.image?.[0]?.type &&
+          ACCEPTED_FILE_TYPES.includes(schema.image[0].type) &&
           schema.image?.[0].size <= MAX_UPLOAD_SIZE
         ) {
           return true;
@@ -74,7 +79,11 @@ export const DomainSettingsSchema = z
     }
   );
 
-  export const HelpDeskQuestionsSchema = z.object({
-    question: z.string().min(1, { message: 'Question cannot be left empty' }),
-    answer: z.string().min(1, { message: 'Question cannot be left empty' }),
-  })
+export const HelpDeskQuestionsSchema = z.object({
+  question: z.string().min(1, { message: "Question cannot be left empty" }),
+  answer: z.string().min(1, { message: "Question cannot be left empty" }),
+});
+
+export const FilterQuestionsSchema = z.object({
+  question: z.string().min(1, { message: "Question cannot be left empty" }),
+});

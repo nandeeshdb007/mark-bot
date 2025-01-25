@@ -15,15 +15,20 @@ import {
   onDeleteUserDomain,
   onCreateHelpDeskQuestion,
   onGetAllHelpDeskQuestions,
+  onCreateFilterQuestions,
+  onGetAllFilterQuestions,
 } from "@/actions/settings";
 import {
   DomainSettingsProps,
   DomainSettingsSchema,
+  FilterQuestionsProps,
+  FilterQuestionsSchema,
   HelpDeskQuestionsProps,
   HelpDeskQuestionsSchema,
 } from "@/schemas/settings.schema";
 import { useRouter } from "next/navigation";
 import { UploadClient } from "@uploadcare/upload-client";
+import { metadata } from "../../app/layout";
 
 const upload = new UploadClient({
   publicKey: process.env.NEXT_PUBLIC_UPLOAD_CARE_PUBLIC_KEY as string,
@@ -207,5 +212,61 @@ export const useHelpDesk = (id: string) => {
     errors,
     isQuestions,
     loading,
+  };
+};
+
+export const useFilterQuestion = (id: string) => {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FilterQuestionsProps>({
+    resolver: zodResolver(FilterQuestionsSchema),
+    mode: "onChange",
+  });
+
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [isQuestions, setIsQuestions] = useState<
+    {
+      id: string;
+      question: string;
+    }[]
+  >([]);
+
+  const onAddFilterQuestions = handleSubmit(async (values) => {
+    setLoading(true);
+    const questions = await onCreateFilterQuestions(id, values.question);
+    if (questions) {
+      setIsQuestions(questions?.questions || []);
+      toast({
+        title: questions.status == 200 ? "Success" : "Error",
+        description: questions.message,
+      });
+      reset();
+      setLoading(false);
+    }
+  });
+
+  const onGetQuestions = async () => {
+    setLoading(true);
+    const questions = await onGetAllFilterQuestions(id);
+    if (questions) {
+      setIsQuestions(questions.questions || []);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    onGetQuestions();
+  }, []);
+
+  return {
+    loading,
+    isQuestions,
+    onAddFilterQuestions,
+    register,
+    errors,
   };
 };
