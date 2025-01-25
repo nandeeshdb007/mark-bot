@@ -332,3 +332,69 @@ export const onDeleteUserDomain = async (id: string) => {
     console.log("onDeleteDomain", error);
   }
 };
+
+export const onCreateHelpDeskQuestion = async (
+  id: string,
+  question: string,
+  answer: string
+) => {
+  try {
+    const helpDeskQuetions = await client.domain.update({
+      where: { id },
+      data: {
+        helpdesk: {
+          create: {
+            question,
+            answer,
+          },
+        },
+      },
+      include: {
+        helpdesk: {
+          select: {
+            id: true,
+            question: true,
+            answer: true,
+          },
+        },
+      },
+    });
+    if (helpDeskQuetions) {
+      return {
+        status: 200,
+        message: "New help desk question created",
+        questions: helpDeskQuetions.helpdesk,
+      };
+    }
+
+    return {
+      status: 400,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    console.log("onCreateHelpDeskQuestion", error);
+  }
+};
+
+export const onGetAllHelpDeskQuestions = async (id: string) => {
+  try {
+    const questions = await client.helpDesk.findMany({
+      where: {
+        domainId: id,
+      },
+      select: {
+        question: true,
+        answer: true,
+        id: true,
+      },
+    });
+
+    return {
+      status: 200,
+      message: "New help desk question added",
+      question: questions,
+    };
+  } catch (error) {
+    console.log("onGetAllHelpDeskQuestions", error);
+  }
+};

@@ -6,17 +6,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 // import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   onUpdateDomain,
   onUpdatedPassword,
   onChatBotImageUpdate,
   onUpdateWelcomeMessage,
   onDeleteUserDomain,
+  onCreateHelpDeskQuestion,
+  onGetAllHelpDeskQuestions,
 } from "@/actions/settings";
 import {
   DomainSettingsProps,
   DomainSettingsSchema,
+  HelpDeskQuestionsProps,
+  HelpDeskQuestionsSchema,
 } from "@/schemas/settings.schema";
 import { useRouter } from "next/navigation";
 import { UploadClient } from "@uploadcare/upload-client";
@@ -140,6 +144,68 @@ export const useSettings = (id: string) => {
     errors,
     loading,
     onDeleteDomain,
-    deleting
-  }
+    deleting,
+  };
+};
+
+export const useHelpDesk = (id: string) => {
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<HelpDeskQuestionsProps>({
+    resolver: zodResolver(HelpDeskQuestionsSchema),
+    mode: "onChange",
+  });
+
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [isQuestions, setIsQuestions] = useState<
+    {
+      id: string;
+      question: string;
+      answer: string;
+    }[]
+  >([]);
+
+  const onSubmitQuestionHandler = handleSubmit(async (values) => {
+    setLoading(true);
+    const question = await onCreateHelpDeskQuestion(
+      id,
+      values.question,
+      values.answer
+    );
+
+    if (question) {
+      setIsQuestions(question.questions!);
+      toast({
+        title: question.status == 200 ? "Success" : "Error",
+        description: question.message,
+      });
+      setLoading(false);
+      reset();
+    }
+  });
+
+  const onGetQuestions = async () => {
+    setLoading(true);
+    const questions = await onGetAllHelpDeskQuestions(id);
+    if (questions) {
+      setIsQuestions(questions.question);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    onGetQuestions();
+  }, []);
+
+  return {
+    register,
+    onSubmitQuestionHandler,
+    errors,
+    isQuestions,
+    loading,
+  };
 };

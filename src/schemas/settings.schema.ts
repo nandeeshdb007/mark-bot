@@ -7,6 +7,11 @@ export type DomainSettingsProps = {
   welcomeMessage?: string;
 };
 
+export type HelpDeskQuestionsProps = {
+  question: string
+  answer: string
+}
+
 export const MAX_UPLOAD_SIZE = 1024 * 1024 * 2; // 2MB
 export const ACCEPTED_FILE_TYPES = ["image/png", "image/jpg", "image/jpeg"];
 
@@ -68,3 +73,8 @@ export const DomainSettingsSchema = z
       path: ["image"],
     }
   );
+
+  export const HelpDeskQuestionsSchema = z.object({
+    question: z.string().min(1, { message: 'Question cannot be left empty' }),
+    answer: z.string().min(1, { message: 'Question cannot be left empty' }),
+  })
