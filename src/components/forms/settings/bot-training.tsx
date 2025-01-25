@@ -3,6 +3,7 @@ import { TabsContent } from "@/components/ui/tabs";
 import { HELP_DESK_TABS_MENU} from "@/constant/menu";
 import React from "react";
 import HelpDesk from "./help-desk";
+import FilteredQuestions from "./filtered-questions";
 
 type Props = { id: string };
 
@@ -21,7 +22,7 @@ const BotTrainingForm = ({ id }: Props) => {
           <HelpDesk id={id} />
         </TabsContent>
         <TabsContent value="questions">
-          {/* <FilteredQuestions id={id} /> */}
+          <FilteredQuestions id={id} />
         </TabsContent>
       </TabsMenu>
     </div>
