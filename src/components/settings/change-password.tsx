@@ -1,9 +1,47 @@
+"use client";
+import { useChangePassword } from "@/hooks/settings/use-settings";
 import React from "react";
+import Section from "../section-label";
+import FormGenerator from "../forms/form-generator";
+import { Button } from "../ui/button";
+import { Loader } from "../loader";
 
 type Props = {};
 
 const ChangePassword = (props: Props) => {
-  return <div>ChangePassword</div>;
+  const { register, errors, onChangePassword, loading } = useChangePassword();
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">
+      <div className="lg:col-span-1">
+        <Section label="Change Password" message="Reset your password" />
+      </div>
+      <form className="lg:col-span-4" onSubmit={onChangePassword}>
+        <div className="lg:w-[500px] flex flex-col gap-3">
+          <FormGenerator
+            id={"change-password"}
+            register={register}
+            errors={errors}
+            name="password"
+            placeholder="Enter new password"
+            inputType="input"
+            type="password"
+          />
+          <FormGenerator
+            id={"change-confirm-password"}
+            register={register}
+            errors={errors}
+            name="confirmPassword"
+            placeholder="Confirm password"
+            inputType="input"
+            type="password"
+          />
+          <Button className="bg-grandis text-gray-700 font-semibold">
+            <Loader loading={loading}>Change Password </Loader>
+          </Button>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default ChangePassword;

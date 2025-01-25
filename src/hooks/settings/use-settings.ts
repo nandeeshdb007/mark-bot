@@ -3,19 +3,25 @@ import {
   ChangePasswordSchema,
 } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
 import { useState } from "react";
 import { onUpdatedPassword } from "@/actions/settings";
 
-export const useThemeMode = () => {
-  const { setTheme, theme } = useTheme();
-  return {
-    setTheme,
-    theme,
-  };
-};
+// export const useThemeMode = () => {
+//   const { setTheme, theme, resolvedTheme } = useTheme();
+//   const [mounted, setMounted] = useState(false);
+
+//   useEffect(() => {
+//     setMounted(true);
+//   }, []);
+
+//   return {
+//     setTheme,
+//     theme: mounted ? theme || resolvedTheme : "light", // Prevent SSR mismatch
+//   };
+// };
 
 export const useChangePassword = () => {
   const {
