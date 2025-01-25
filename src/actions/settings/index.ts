@@ -142,12 +142,57 @@ export const onIntegrateDomain = async (domain: string, icon: string) => {
 export const onUpdatedPassword = async (password: string) => {
   try {
     const user = await currentUser();
-    if(!user) return null;
+    if (!user) return null;
 
-    const update = await clerkClient.users.updateUser(user.id,{password});
-    if(update) return{status:200, message:'Password updated successfully'}
-    
+    const update = await clerkClient.users.updateUser(user.id, { password });
+    if (update)
+      return { status: 200, message: "Password updated successfully" };
   } catch (error) {
-    console.log("onUpdatedPassword",error)
+    console.log("onUpdatedPassword", error);
+  }
+};
+
+export const onGetCurrentDomainInfo = async (domain: string) => {
+  const user = await currentUser();
+  if (!user) return;
+  try {
+    const userDomain = await client.user.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        subscription: {
+          select: {
+            plan: true,
+          },
+        },
+        domains: {
+          where: {
+            name: {
+              contains: domain,
+            },
+          },
+          select: {
+            id: true,
+            name: true,
+            icon: true,
+            userId: true,
+            products: true,
+            chatBot: {
+              select: {
+                id: true,
+                welcomeMessage: true,
+                icon: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (userDomain) {
+      return userDomain;
+    }
+  } catch (error) {
+    console.log("onGetCurrentDomainInfo", error);
   }
 };
