@@ -10,7 +10,7 @@ const DashBoardLayout = async ({ children }: { children: React.ReactNode }) => {
     <ChatProvider>
       <div className="flex h-screen w-full">
         <SideBar domains={authenticated.domains} />
-        <div className="w-full h-screen flex flex-col py-3 pr-10 pl-20 md:px-10 lg:overflow-x-hidden">
+        <div className="w-full h-screen flex flex-col pl-20 md:pl-4">
           {children}
         </div>
       </div>

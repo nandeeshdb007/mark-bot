@@ -33,17 +33,27 @@ export const getMonthName = (month: number) => {
     : month == 12 && "Dec";
 };
 
-export const pusherClient = new PusherClient(
-  process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
-  {
-    cluster: "mt1",
-  }
-);
+export const pusherClient = {}
 
-export const puhserSever = new PusherSever({
-  appId: process.env.PUSHER_APP_ID as string,
-  key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
-  secret: process.env.PUSHER_APP_SECRET as string,
-  cluster: "mt1",
-  useTLS: true,
-});
+// new PusherClient(
+//   process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+//   {
+//     cluster: "mt1",
+//   }
+// );
+
+export const puhserSever ={}
+//  new PusherSever({
+//   appId: process.env.PUSHER_APP_ID as string,
+//   key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+//   secret: process.env.PUSHER_APP_SECRET as string,
+//   cluster: "mt1",
+//   useTLS: true,
+// });
+
+
+export const extractUUIDFromString = (url: string) => {
+  return url.match(
+    /^[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$/i
+  )
+}
