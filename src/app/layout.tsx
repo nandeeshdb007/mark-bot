@@ -30,6 +30,9 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <div className="w-full h-full bg-black opacity-0 items-center justify-center">
+            <div id="clerk-captcha" />
+          </div>
           {children}
           <Toaster />
         </body>
