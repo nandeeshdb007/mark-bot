@@ -1,4 +1,5 @@
 import { client } from "@/lib/prisma";
+import { puhserSever } from "@/lib/utils";
 
 export const onToggleRealtine = async (id: string, state: boolean) => {
   try {
@@ -129,3 +130,64 @@ export const onViewUnReadMessages = async (id: string) => {
     console.log("onViewUnReadMessages", error);
   }
 };
+
+export const onOwnwerSendMessage = async (
+  chatRoom: string,
+  message: string,
+  role: "assistant" | "user"
+) => {
+  try {
+    const chat = await client.chatRoom.update({
+      where: {
+        id: chatRoom,
+      },
+      data: {
+        message: {
+          create: {
+            message,
+            role,
+          },
+        },
+      },
+      select: {
+        message: {
+          select: {
+            id: true,
+            role: true,
+            message: true,
+            createdAt: true,
+            seen: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+          take: 1,
+        },
+      },
+    });
+
+    if (chat) {
+      return chat;
+    }
+  } catch (error) {
+    console.log("onOwnwerSendMessage", error);
+  }
+};
+
+export const onRelTimeChat = async (
+  chatRoomId: string,
+  message: string,
+  id: string,
+  role: "assistant" | "user"
+) => {
+  puhserSever.trigger(chatRoomId, "realtime-mode", {
+    chat: {
+      message,
+      id,
+      role,
+    },
+  });
+};
+
+
+// export const onOwnwer 

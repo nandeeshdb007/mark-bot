@@ -1,5 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import PusherClient from "pusher-js";
+import PusherSever from "pusher";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -30,3 +32,18 @@ export const getMonthName = (month: number) => {
     ? "Nov"
     : month == 12 && "Dec";
 };
+
+export const pusherClient = new PusherClient(
+  process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+  {
+    cluster: "mt1",
+  }
+);
+
+export const puhserSever = new PusherSever({
+  appId: process.env.PUSHER_APP_ID as string,
+  key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+  secret: process.env.PUSHER_APP_SECRET as string,
+  cluster: "mt1",
+  useTLS: true,
+});
