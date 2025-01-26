@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import Section from "@/components/section-label";
 import { useToast } from "@/hooks/use-toast";
@@ -21,14 +22,29 @@ const CodeSnippet = ({ id }: Props) => {
       document.head.append(style);
     };
 
-    iframeStyles(\`
-      .chat-frame {
-        position: fixed;
-        bottom: 50px;
-        right: 50px;
-        border: none;
-      }
-    \`);
+   iframeStyles ( \`
+  .chat-frame {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
+    max-height: 500px;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: white;
+  }
+
+  @media (min-width: 1024px) {
+    .chat-frame {
+      max-width: 400px;
+      max-height: 600px;
+      margin-right: 60px;
+    }
+  }
+\`)
 
     iframe.src = "${PRODUCTION_URL}/chatbot";
     iframe.classList.add('chat-frame');
