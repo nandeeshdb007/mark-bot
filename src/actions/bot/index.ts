@@ -174,7 +174,7 @@ export const onAiChatBotAssistant = async (
               checkCustomer.User?.clerkId ?? ""
             );
 
-            onMailer(user.emailAddresses[0].emailAddress);
+            await onMailer(user.emailAddresses[0].emailAddress);
 
             const mailed = await client.chatRoom.update({
               where: {
