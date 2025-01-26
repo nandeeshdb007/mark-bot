@@ -14,23 +14,23 @@ const CodeSnippet = ({ id }: Props) => {
   const PRODUCTION_URL = process.env.NEXT_PUBLIC_PRODUCTION_URL as string;
 
   const snippet = `
-    const iframe = document.createElement("iframe");
+const iframe = document.createElement("iframe");
 
-    const iframeStyles = (styleString) => {
-      const style = document.createElement('style');
-      style.textContent = styleString;
-      document.head.append(style);
-    };
+const iframeStyles = (styleString) => {
+  const style = document.createElement('style');
+  style.textContent = styleString;
+  document.head.append(style);
+};
 
-   iframeStyles ( \`
+iframeStyles(\`
   .chat-frame {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 10px;
+    right: 10px;
     width: 100%;
     max-width: 300px;
     height: 100%;
-    max-height: 500px;
+    max-height: 640px;
     border: none;
     border-radius: 12px;
     overflow: hidden;
@@ -40,24 +40,25 @@ const CodeSnippet = ({ id }: Props) => {
   @media (min-width: 1024px) {
     .chat-frame {
       max-width: 400px;
-      max-height: 600px;
+      max-height: 640px;
       margin-right: 60px;
+      bottom: 20px;
     }
   }
-\`)
+\`);
 
-    iframe.src = "${PRODUCTION_URL}/chatbot";
-    iframe.classList.add('chat-frame');
-    document.body.appendChild(iframe);
+iframe.src = "${PRODUCTION_URL}/chatbot";
+iframe.classList.add('chat-frame');
+document.body.appendChild(iframe);
 
-    window.addEventListener("message", (e) => {
-      if (e.origin !== "${PRODUCTION_URL}") return null;
-      let dimensions = JSON.parse(e.data);
-      iframe.width = dimensions.width;
-      iframe.height = dimensions.height;
-      iframe.contentWindow.postMessage("${id}", "${PRODUCTION_URL}/");
-    });
-  `;
+window.addEventListener("message", (e) => {
+  if (e.origin !== "${PRODUCTION_URL}") return;
+  let dimensions = JSON.parse(e.data);
+  iframe.width = dimensions.width;
+  iframe.height = dimensions.height;
+  iframe.contentWindow.postMessage("${id}", "${PRODUCTION_URL}/");
+});
+`;
 
   const handleCopy = async () => {
     try {
