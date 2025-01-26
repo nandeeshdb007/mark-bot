@@ -174,7 +174,7 @@ export const onOwnwerSendMessage = async (
   }
 };
 
-export const onRelTimeChat = async (
+export const onRealTimeChat = async (
   chatRoomId: string,
   message: string,
   id: string,

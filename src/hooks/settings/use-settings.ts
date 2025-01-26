@@ -27,11 +27,8 @@ import {
   HelpDeskQuestionsSchema,
 } from "@/schemas/settings.schema";
 import { useRouter } from "next/navigation";
-import { UploadClient } from "@uploadcare/upload-client";
+import { upload } from "@/lib/utils";
 
-const upload = new UploadClient({
-  publicKey: process.env.NEXT_PUBLIC_UPLOAD_CARE_PUBLIC_KEY as string,
-});
 
 // export const useThemeMode = () => {
 //   const { setTheme, theme, resolvedTheme } = useTheme();

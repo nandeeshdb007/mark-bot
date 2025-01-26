@@ -1,16 +1,13 @@
 import { onIntegrateDomain } from "@/actions/settings";
 import { AddDomainSchema, DomainSettingsProps } from "@/schemas/settings.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UploadClient } from "@uploadcare/upload-client";
-import { usePathname, useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";import { usePathname, useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useToast } from "./use-toast";
+import { upload } from "@/lib/utils";
 
-const upload = new UploadClient({
-  publicKey: process.env.NEXT_PUBLIC_UPLOAD_CARE_PUBLIC_KEY as string,
-});
+
 
 export const useDomain = () => {
   const {
