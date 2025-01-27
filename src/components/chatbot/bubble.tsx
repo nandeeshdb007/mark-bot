@@ -16,6 +16,7 @@ type Props = {
 };
 
 const Bubble = ({ message, createdAt }: Props) => {
+  console.log("string", message);
   const d = new Date();
   const image = extractUUIDFromString(message.content);
   return (
@@ -27,12 +28,11 @@ const Bubble = ({ message, createdAt }: Props) => {
     >
       {message.role == "assistant" ? (
         <Avatar className="w-5 h-5">
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn">
-            <AvatarFallback>CN</AvatarFallback>
-          </AvatarImage>
+          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+          <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ) : (
-        <Avatar className="w-5 h-5">
+        <Avatar className="w-6 h-6 bg-gray-200">
           <AvatarFallback>
             <User />
           </AvatarFallback>
@@ -40,14 +40,14 @@ const Bubble = ({ message, createdAt }: Props) => {
       )}
       <div
         className={cn(
-          "flex flex-col gap-3 min-w-[200px] max-w-[300px] p-4 rounded-t-md",
+          "flex flex-col gap-1 min-w-[200px] max-w-[300px] p-4 rounded-t-md",
           message.role == "assistant"
             ? "bg-muted rounded-r-md"
             : "bg-grandis rounded-l-md"
         )}
       >
         {createdAt ? (
-          <div className={"flex gap-2 text-xs text-gray-600"}>
+          <div className={"flex gap-1 text-xs text-gray-600"}>
             <p>
               {createdAt.getDate()}
               {getMonthName(createdAt.getMonth())}
@@ -58,7 +58,7 @@ const Bubble = ({ message, createdAt }: Props) => {
             </p>
           </div>
         ) : (
-          <p className="text-xs">
+          <p className="text-xs ">
             {`${d.getHours()}:${d.getMinutes()} ${
               d.getHours() > 12 ? "PM" : "AM"
             }`}
@@ -66,7 +66,7 @@ const Bubble = ({ message, createdAt }: Props) => {
         )}
         {image ? (
           <div className="relative aspect-square">
-            <Image src={`https://ucarecdn.com/${image[0]}`} fill alt="image" />
+            <Image src={`https://ucarecdn.com/${image[0]}/`} fill alt="image" />
           </div>
         ) : (
           <p>

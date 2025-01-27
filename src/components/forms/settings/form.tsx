@@ -29,7 +29,7 @@ type Props = {
   } | null;
 };
 
-const SettingsForm = ({ id, name, chatBot, plan }: Props) => {
+const SettingsForm = ({ id, name, chatBot }: Props) => {
   const {
     register,
     loading,

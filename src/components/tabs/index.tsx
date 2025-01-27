@@ -13,6 +13,7 @@ type Props = {
 };
 
 const TabsMenu = ({ triggers, children, className, button }: Props) => {
+  
   return (
     <Tabs defaultValue={triggers[0].label} className="w-full">
       <TabsList className={cn("pr-5", className)}>
