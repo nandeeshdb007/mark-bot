@@ -28,12 +28,12 @@ const ChatCard = ({
   return (
     <Card
       onClick={onChat}
-      className="rounded-none border-r-0 hover:bg-muted cursor-pointer transition duration-150 ease-in-out"
+      className="rounded-none w-full border-r-0 hover:bg-muted cursor-pointer transition duration-150 ease-in-out"
     >
       <CardContent className="py-4 flex gap-3">
         <div>
           <Avatar>
-            <AvatarFallback className="bg-muted">
+            <AvatarFallback className=" w-8 h-8 rounded-full flex items-center justify-center">
               <User />
             </AvatarFallback>
           </Avatar>

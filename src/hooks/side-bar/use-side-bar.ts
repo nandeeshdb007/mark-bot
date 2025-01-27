@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useChatContext } from "../../context/use-chat-context";
 import {
   onGetConversationMode,
-  onToggleRealtine,
+  onToggleRealtime,
 } from "@/actions/conversation";
 import { usePathname,useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -22,7 +22,7 @@ const useSideBar = () => {
   const onActivateRealTime = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
       if (!chatRoom) return null;
-      const realTime = await onToggleRealtine(
+      const realTime = await onToggleRealtime(
         chatRoom,
         e?.target?.ariaChecked == "true" ? false : true
       );

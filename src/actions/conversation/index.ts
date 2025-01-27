@@ -1,3 +1,4 @@
+"use server"
 import { client } from "@/lib/prisma";
 import { puhserSever } from "@/lib/utils";
 
@@ -174,20 +175,20 @@ export const onOwnwerSendMessage = async (
   }
 };
 
-export const onRealTimeChat = async (
-  chatRoomId: string,
-  message: string,
-  id: string,
-  role: "assistant" | "user"
-) => {
-  puhserSever.trigger(chatRoomId, "realtime-mode", {
-    chat: {
-      message,
-      id,
-      role,
-    },
-  });
-};
+// export const onRealTimeChat = async (
+//   chatRoomId: string,
+//   message: string,
+//   id: string,
+//   role: "assistant" | "user"
+// ) => {
+//   puhserSever.trigger(chatRoomId, "realtime-mode", {
+//     chat: {
+//       message,
+//       id,
+//       role,
+//     },
+//   });
+// };
 
 
 // export const onOwnwer 
