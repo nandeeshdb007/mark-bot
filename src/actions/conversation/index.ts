@@ -1,8 +1,8 @@
 "use server"
 import { client } from "@/lib/prisma";
-import { puhserSever } from "@/lib/utils";
+// import { puhserSever } from "@/lib/utils";
 
-export const onToggleRealtine = async (id: string, state: boolean) => {
+export const onToggleRealtime = async (id: string, state: boolean) => {
   try {
     const chatRoom = await client.chatRoom.update({
       where: {
