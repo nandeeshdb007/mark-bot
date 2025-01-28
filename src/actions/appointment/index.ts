@@ -43,3 +43,38 @@ export const onGetAllDomainBookings = async (domainId: string) => {
     console.log("onGetAllDomainBookings", error);
   }
 };
+
+export const onBookNewAppointment = async (
+  domainId: string,
+  customerId: string,
+  slot: string,
+  date: string,
+  email: string
+) => {
+  try {
+    const booking = await client.customer.update({
+      where: {
+        id: customerId,
+      },
+      data: {
+        booking: {
+          create: {
+            domainId,
+            slot,
+            date,
+            email,
+          },
+        },
+      },
+    });
+
+    if (booking) {
+      return {
+        status: 200,
+        message: "Booking created",
+      };
+    }
+  } catch (error) {
+    console.log("onBookNewAppointment", error);
+  }
+};
