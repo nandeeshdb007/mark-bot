@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 "use server";
 
 import { client } from "@/lib/prisma";
 import { extractEmailsFromString, extractURLfromString } from "@/lib/utils";
-import { onRealTimeChat } from "../conversation";
+// import { onRealTimeChat } from "../conversation";
 import { clerkClient } from "@clerk/nextjs";
 import { onMailer } from "../mailer";
 import OpenAi from "openai";
@@ -157,21 +158,21 @@ export const onAiChatBotAssistant = async (
         }
         if (checkCustomer && checkCustomer.customer[0].chatRoom[0].live) {
           await onStoreConversations(
-            checkCustomer?.customer[0].chatRoom[0].id ?? "",
+            checkCustomer?.customer[0].chatRoom[0].id!,
             message,
             author
           );
 
-          onRealTimeChat(
-            checkCustomer.customer[0].chatRoom[0].id,
-            message,
-            "user",
-            author
-          );
+          // onRealTimeChat(
+          //   checkCustomer.customer[0].chatRoom[0].id,
+          //   message,
+          //   "user",
+          //   author
+          // );
 
           if (!checkCustomer.customer[0].chatRoom[0].mailed) {
             const user = await clerkClient.users.getUser(
-              checkCustomer.User?.clerkId ?? ""
+              checkCustomer.User?.clerkId!
             );
 
             onMailer(user.emailAddresses[0].emailAddress);
@@ -200,7 +201,7 @@ export const onAiChatBotAssistant = async (
         }
 
         await onStoreConversations(
-          checkCustomer?.customer[0].chatRoom[0].id ?? "",
+          checkCustomer?.customer[0].chatRoom[0].id!,
           message,
           author
         );
@@ -266,7 +267,7 @@ export const onAiChatBotAssistant = async (
             };
 
             await onStoreConversations(
-              checkCustomer?.customer[0].chatRoom[0].id ?? "",
+              checkCustomer?.customer[0].chatRoom[0].id!,
               response.content,
               "assistant"
             );
@@ -314,7 +315,7 @@ export const onAiChatBotAssistant = async (
             };
 
             await onStoreConversations(
-              checkCustomer?.customer[0].chatRoom[0].id ?? "",
+              checkCustomer?.customer[0].chatRoom[0].id!,
               `${response.content} ${response.link}`,
               "assistant"
             );
@@ -328,7 +329,7 @@ export const onAiChatBotAssistant = async (
           };
 
           await onStoreConversations(
-            checkCustomer?.customer[0].chatRoom[0].id ?? "",
+            checkCustomer?.customer[0].chatRoom[0].id!,
             `${response.content}`,
             "assistant"
           );
