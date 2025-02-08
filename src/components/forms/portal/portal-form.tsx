@@ -3,6 +3,7 @@
 import { usePortal } from "@/hooks/portal/use-portal";
 import PortalSteps from "./portal-steps";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 type Props = {
   questions: {
@@ -55,6 +56,12 @@ const PortalForm = ({
     onSelectedTimeSlot,
     selectedSlot,
   } = usePortal(customerId, domainId, email);
+
+  useEffect(() => {
+    if (questions.every((ques) => ques.answered)) {
+      onNext();
+    }
+  }, [questions]);
   return (
     <form
       className="h-full flex flex-col gap-10 justify-center"
@@ -93,7 +100,6 @@ const PortalForm = ({
                 step == 2 ? "bg-orange" : "bg-platinum"
               )}
             />
-            
           </div>
         </div>
       )}

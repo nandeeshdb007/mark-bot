@@ -1,6 +1,7 @@
-"use server";
+'use server'
 
-import { client } from "@/lib/prisma";
+import { client } from '@/lib/prisma'
+import { currentUser } from '@clerk/nextjs'
 
 export const onDomainCustomerResponses = async (customerId: string) => {
   try {
@@ -18,31 +19,35 @@ export const onDomainCustomerResponses = async (customerId: string) => {
           },
         },
       },
-    });
+    })
+
     if (customerQuestions) {
-      return customerQuestions;
+      return customerQuestions
     }
   } catch (error) {
-    console.log("onDomainCustomerResponses", error);
+    console.log(error)
   }
-};
+}
 
 export const onGetAllDomainBookings = async (domainId: string) => {
   try {
     const bookings = await client.bookings.findMany({
-      where: { id: domainId },
+      where: {
+        domainId,
+      },
       select: {
         slot: true,
         date: true,
       },
-    });
+    })
+
     if (bookings) {
-      return bookings;
+      return bookings
     }
   } catch (error) {
-    console.log("onGetAllDomainBookings", error);
+    console.log(error)
   }
-};
+}
 
 export const onBookNewAppointment = async (
   domainId: string,
@@ -66,15 +71,109 @@ export const onBookNewAppointment = async (
           },
         },
       },
-    });
+    })
 
     if (booking) {
-      return {
-        status: 200,
-        message: "Booking created",
-      };
+      return { status: 200, message: 'Booking created' }
     }
   } catch (error) {
-    console.log("onBookNewAppointment", error);
+    console.log(error)
   }
-};
+}
+
+export const saveAnswers = async (
+  questions: [question: string],
+  customerId: string
+) => {
+  try {
+    for (const question in questions) {
+      await client.customer.update({
+        where: { id: customerId },
+        data: {
+          questions: {
+            update: {
+              where: {
+                id: question,
+              },
+              data: {
+                answered: questions[question],
+              },
+            },
+          },
+        },
+      })
+    }
+    return {
+      status: 200,
+      messege: 'Updated Responses',
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const onGetAllBookingsForCurrentUser = async (clerkId: string) => {
+  try {
+    const bookings = await client.bookings.findMany({
+      where: {
+        Customer: {
+          Domain: {
+            User: {
+              clerkId,
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        slot: true,
+        createdAt: true,
+        date: true,
+        email: true,
+        domainId: true,
+        Customer: {
+          select: {
+            Domain: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (bookings) {
+      return {
+        bookings,
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getUserAppointments = async () => {
+  try {
+    const user = await currentUser()
+    if (user) {
+      const bookings = await client.bookings.count({
+        where: {
+          Customer: {
+            Domain: {
+              User: {
+                clerkId: user.id,
+              },
+            },
+          },
+        },
+      })
+
+      if (bookings) {
+        return bookings
+      }
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}

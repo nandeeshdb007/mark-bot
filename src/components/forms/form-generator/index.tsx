@@ -12,6 +12,7 @@ interface FormGenaratorInterface extends UserRegistrationProps {
   errors: FieldErrors<any>;
   lines?: number;
   form?: string;
+  defaultValue?:any
 }
 
 const FormGenerator = ({
@@ -25,6 +26,7 @@ const FormGenerator = ({
   errors,
   lines,
   form,
+  defaultValue
 }: FormGenaratorInterface) => {
   switch (inputType) {
     case "input":
@@ -33,6 +35,7 @@ const FormGenerator = ({
           {label && label}
           <Input
             id={`input-${label}`}
+            defaultValue={defaultValue}
             type={type}
             placeholder={placeholder}
             form={form}
