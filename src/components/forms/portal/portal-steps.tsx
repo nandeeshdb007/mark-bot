@@ -1,6 +1,8 @@
+"use client";
 import QuestionsForm from "@/components/portal/question";
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import BookAppointmentDate from "./book-appointment-date";
 
 type Props = {
   questions: {
@@ -54,6 +56,7 @@ const PortalSteps = ({
   amount,
   stripeId,
 }: Props) => {
+  console.log("step", step);
   if (step == 1) {
     return (
       <QuestionsForm
@@ -65,20 +68,20 @@ const PortalSteps = ({
     );
   }
 
-  // if (step == 2 && type == "Appointment") {
-  //   return (
-  //     <BookAppointmentDate
-  //       date={date}
-  //       bookings={bookings}
-  //       currentSlot={slot}
-  //       register={register}
-  //       onBack={onBack}
-  //       onBooking={onBooking}
-  //       onSlot={onSlot}
-  //       loading={loading}
-  //     />
-  //   );
-  // }
+  if (step == 2 && type == "Appointment") {
+    return (
+      <BookAppointmentDate
+        date={date}
+        bookings={bookings}
+        currentSlot={slot}
+        register={register}
+        onBack={onBack}
+        onBooking={onBooking}
+        onSlot={onSlot}
+        loading={loading}
+      />
+    );
+  }
 
   // if (step == 2 && type == "Payment") {
   //   return (
