@@ -4,19 +4,9 @@ import { Loader } from "../loader";
 import { Switch } from "../ui/switch";
 import useSideBar from "@/hooks/side-bar/use-side-bar";
 
-type Props = {};
-
-const BreadCrumb = (props: Props) => {
-  const {
-    chatRoom,
-    expand,
-    loading,
-    onActivateRealTime,
-    onExpand,
-    page,
-    onSignOut,
-    realtime,
-  } = useSideBar();
+const BreadCrumb = () => {
+  const { chatRoom, loading, onActivateRealTime, page, realtime } =
+    useSideBar();
   return (
     <div className="flex flex-col ">
       <div className="flex gap-5 items-center">

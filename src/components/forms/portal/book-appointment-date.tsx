@@ -57,7 +57,7 @@ const BookAppointmentDate = ({
             className="rounded-md border"
           />
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="grid grid-cols-2 gap-5">
           {APPOINTMENT_TIME_SLOTS.map((slot, key) => (
             <Label htmlFor={`slot-${key}`} key={key}>
               <Card

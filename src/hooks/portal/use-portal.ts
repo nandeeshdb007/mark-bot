@@ -2,6 +2,7 @@ import { onBookNewAppointment, saveAnswers } from "@/actions/appointment";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
+import { Toast } from "@/components/ui/toast";
 
 export const usePortal = (
   customerId: string,
@@ -20,8 +21,6 @@ export const usePortal = (
   const [selectedSlot, setSelectedSlot] = useState<string | undefined>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  console.log("data", date);
-
   setValue("date", date);
 
   const onNext = () => setStep((prev) => prev + 1);
@@ -30,6 +29,18 @@ export const usePortal = (
 
   const onBookAppointment = handleSubmit(async (values) => {
     console.log("values", values);
+    if (!values.slot) {
+      toast({
+        title: "Error",
+        description: "Please Select Timings",
+      });
+    }
+    if (values.Date == undefined) {
+      toast({
+        title: "Error",
+        description: "Please Select Date",
+      });
+    }
     try {
       setLoading(true);
       const questions = Object.keys(values)

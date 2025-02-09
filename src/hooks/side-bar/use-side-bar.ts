@@ -5,7 +5,7 @@ import {
   onGetConversationMode,
   onToggleRealtime,
 } from "@/actions/conversation";
-import { usePathname,useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useClerk } from "@clerk/nextjs";
 
@@ -53,10 +53,12 @@ const useSideBar = () => {
     }
   }, [chatRoom]);
 
-  const page = pathname.split("/").pop();
+  const page = pathname.split("/")[1];
   const { signOut } = useClerk();
   const onSignOut = () => signOut(() => router.push("/"));
   const onExpand = () => setExpand((prev) => !prev);
+
+  console.log("pageName", page);
 
   return {
     expand,
