@@ -1,11 +1,10 @@
 "use client";
-
 import { usePortal } from "@/hooks/portal/use-portal";
-import PortalSteps from "./portal-steps";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import PortalSteps from "./portal-steps";
 
-type Props = {
+type PortalFormProps = {
   questions: {
     id: string;
     question: string;
@@ -13,21 +12,17 @@ type Props = {
   }[];
   type: "Appointment" | "Payment";
   customerId: string;
-  domainId: string;
+  domainid: string;
   email: string;
-  bookings?:
-    | {
-        date: Date;
-        slot: string;
-      }[]
-    | undefined;
-  products?:
-    | {
-        name: string;
-        image: string;
-        price: number;
-      }[]
-    | undefined;
+  bookings?: {
+    date: Date;
+    slot: string;
+  }[];
+  products?: {
+    name: string;
+    image: string;
+    price: number;
+  }[];
   amount?: number;
   stripeId?: string;
 };
@@ -36,36 +31,42 @@ const PortalForm = ({
   questions,
   type,
   customerId,
-  domainId,
+  domainid,
   bookings,
   products,
   email,
   amount,
   stripeId,
-}: Props) => {
+}: PortalFormProps) => {
   const {
     step,
     onNext,
     onPrev,
     register,
     errors,
-    loading,
-    onBookAppointment,
     date,
     setDate,
+    onBookAppointment,
     onSelectedTimeSlot,
     selectedSlot,
-  } = usePortal(customerId, domainId, email);
+    loading,
+  } = usePortal(customerId, domainid, email);
 
   useEffect(() => {
-    if (questions.every((ques) => ques.answered)) {
+    console.log("inside")
+    const allQuestionsAnswered = questions.every((question) => question.answered);
+    if (allQuestionsAnswered) {
       onNext();
     }
-  }, [questions]);
+  }, []); 
+
   return (
     <form
       className="h-full flex flex-col gap-10 justify-center"
-      onSubmit={onBookAppointment}
+      onSubmit={(e) => {
+        e.preventDefault(); // Fix 2: Prevent default form submission
+        onBookAppointment();
+      }}
     >
       <PortalSteps
         loading={loading}
@@ -74,7 +75,7 @@ const PortalForm = ({
         onSlot={onSelectedTimeSlot}
         date={date}
         onBooking={setDate}
-        step={step}
+        step={1}
         type={type}
         questions={questions}
         error={errors}
@@ -85,19 +86,19 @@ const PortalForm = ({
         amount={amount}
         stripeId={stripeId}
       />
-      {(step == 1 || step == 2) && (
+      {(step === 1 || step === 2) && ( // Fix 3: Use strict equality
         <div className="w-full flex justify-center">
           <div className="w-[400px] grid grid-cols-2 gap-3">
             <div
               className={cn(
                 "rounded-full h-2 col-span-1",
-                step == 1 ? "bg-orange" : "bg-platinum"
+                step === 1 ? "bg-orange" : "bg-platinum"
               )}
             />
             <div
               className={cn(
                 "rounded-full h-2 col-span-1",
-                step == 2 ? "bg-orange" : "bg-platinum"
+                step === 2 ? "bg-orange" : "bg-platinum"
               )}
             />
           </div>

@@ -1,6 +1,5 @@
-"use client";
+import QuestionsForm from "@/components/portal/question";
 import React from "react";
-import QuestionForm from "./question-form";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 type Props = {
@@ -55,11 +54,10 @@ const PortalSteps = ({
   amount,
   stripeId,
 }: Props) => {
-  console.log("steppppp", step);
-  if (step == 2) {
+  if (step == 1) {
     return (
-      <QuestionForm
-        resgister={register}
+      <QuestionsForm
+        register={register}
         error={error}
         onNext={onNext}
         questions={questions}
@@ -67,21 +65,42 @@ const PortalSteps = ({
     );
   }
 
-  //   if (step == 1 && type == "Appointment") {
-  //     return (
-  //       <BookAppointmentDate
-  //         date={date}
-  //         booking={bookings}
-  //         currentSlot={register}
-  //         onBack={onBack}
-  //         onBooking={onBooking}
-  //         onSlot={onSlot}
-  //         loading={loading}
-  //       />
-  //     );
-  //   }
+  // if (step == 2 && type == "Appointment") {
+  //   return (
+  //     <BookAppointmentDate
+  //       date={date}
+  //       bookings={bookings}
+  //       currentSlot={slot}
+  //       register={register}
+  //       onBack={onBack}
+  //       onBooking={onBooking}
+  //       onSlot={onSlot}
+  //       loading={loading}
+  //     />
+  //   );
+  // }
 
-  return <></>;
+  // if (step == 2 && type == "Payment") {
+  //   return (
+  //     <PaymentCheckout
+  //       products={products}
+  //       stripeId={stripeId}
+  //       onBack={onBack}
+  //       onNext={onNext}
+  //       amount={amount}
+  //     />
+  //   );
+  // }
+
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <h2 className="font-bold text-gray-600 text-4xl">Thank You</h2>
+      <p className="text-center">
+        Thank you for taking the time to fill in this form. We look forward to
+        <br /> speaking to you soon.
+      </p>
+    </div>
+  );
 };
 
 export default PortalSteps;

@@ -16,7 +16,7 @@ export const usePortal = (
   } = useForm();
 
   const { toast } = useToast();
-  const [step, setStep] = useState<number>(2);
+  const [step, setStep] = useState<number>(1);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedSlot, setSelectedSlot] = useState<string | undefined>("");
   const [loading, setLoading] = useState<boolean>(false);
