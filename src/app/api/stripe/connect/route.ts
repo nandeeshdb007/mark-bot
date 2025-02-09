@@ -2,6 +2,7 @@ import { client } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!, {
   typescript: true,
   apiVersion: "2025-01-27.acacia",
@@ -10,141 +11,69 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!, {
 export async function GET() {
   try {
     const user = await currentUser();
-    if (!user) return new NextResponse("User is not authenticated");
+    if (!user) {
+      return new NextResponse("User is not authenticated", { status: 401 });
+    }
 
+    // Create a Standard Connect account without auto-accepting ToS
     const account = await stripe.accounts.create({
+      type: "standard",
       country: "US",
       business_type: "company",
       capabilities: {
-        card_payments: {
-          requested: true,
-        },
-        transfers: {
-          requested: true,
-        },
+        card_payments: { requested: true },
+        transfers: { requested: true },
       },
-      external_account: "btok_us",
-      tos_acceptance: {
-        date: 1547023073,
-        ip: "172.18.80.19",
+      business_profile: {
+        mcc: "5045",
+        url: "https://bestcookieco.com",
+      },
+      company: {
+        address: {
+          city: "Fairfax",
+          line1: "123 State St",
+          postal_code: "22031",
+          state: "VA",
+        },
+        tax_id: "000000000",
+        name: "The Best Cookie Co",
+        phone: "8888675309",
       },
     });
 
-    if (account) {
-      const approve = await stripe.accounts.update(account.id, {
-        business_profile: {
-          mcc: "5045",
-          url: "https://bestcookieco.com",
-        },
-        company: {
-          address: {
-            city: "Fairfax",
-            line1: "123 State St",
-            postal_code: "22031",
-            state: "VA",
-          },
-          tax_id: "000000000",
-          name: "The Best Cookie Co",
-          phone: "8888675309",
-        },
-      });
-      if (approve) {
-        const person = await stripe.accounts.createPerson(account.id, {
-          first_name: "Jenny",
-          last_name: "Rosen",
-          relationship: {
-            representative: true,
-            title: "CEO",
-          },
-        });
-        if (person) {
-          const approvePerson = await stripe.accounts.updatePerson(
-            account.id,
-            person.id,
-            {
-              address: {
-                city: "victoria ",
-                line1: "123 State St",
-                postal_code: "V8P 1A1",
-                state: "BC",
-              },
-              dob: {
-                day: 10,
-                month: 11,
-                year: 1980,
-              },
-              ssn_last_4: "0000",
-              phone: "8888675309",
-              email: "jenny@bestcookieco.com",
-              relationship: {
-                executive: true,
-              },
-            }
-          );
-          if (approvePerson) {
-            const owner = await stripe.accounts.createPerson(account.id, {
-              first_name: "Kathleen",
-              last_name: "Banks",
-              email: "kathleen@bestcookieco.com",
-              address: {
-                city: "victoria ",
-                line1: "123 State St",
-                postal_code: "V8P 1A1",
-                state: "BC",
-              },
-              dob: {
-                day: 10,
-                month: 11,
-                year: 1980,
-              },
-              phone: "8888675309",
-              relationship: {
-                owner: true,
-                percent_ownership: 80,
-              },
-            });
-            if (owner) {
-              const complete = await stripe.accounts.update(account.id, {
-                company: {
-                  owners_provided: true,
-                },
-              });
-              if (complete) {
-                const saveAccountId = await client.user.update({
-                  where: {
-                    clerkId: user.id,
-                  },
-                  data: {
-                    stripeId: account.id,
-                  },
-                });
+    // Save the Stripe account ID to the user's record
+    await client.user.update({
+      where: {
+        clerkId: user.id,
+      },
+      data: {
+        stripeId: account.id,
+      },
+    });
 
-                if (saveAccountId) {
-                  const accountLink = await stripe.accountLinks.create({
-                    account: account.id,
-                    refresh_url:
-                      "http://localhost:3000/callback/stripe/refresh",
-                    return_url: "http://localhost:3000/callback/stripe/success",
-                    type: "account_onboarding",
-                    collection_options: {
-                      fields: "currently_due",
-                    },
-                  });
+    // Create an account link for onboarding
+    const accountLink = await stripe.accountLinks.create({
+      account: account.id,
+      refresh_url: "http://localhost:3000/callback/stripe/refresh",
+      return_url: "http://localhost:3000/callback/stripe/success",
+      type: "account_onboarding",
+      collect: "currently_due",
+    });
 
-                  return NextResponse.json({
-                    url: accountLink.url,
-                  });
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+    return NextResponse.json({
+      url: accountLink.url,
+      accountId: account.id,
+    });
   } catch (error) {
-    console.error(
-        'An error occurred when calling the Stripe API to create an account:',
-        error
-      )
+    console.error("Stripe account creation error:", error);
+    return new NextResponse(
+      JSON.stringify({
+        error:
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred",
+      }),
+      { status: 500 }
+    );
   }
 }
