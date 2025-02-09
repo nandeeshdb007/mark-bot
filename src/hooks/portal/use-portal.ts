@@ -1,7 +1,7 @@
+import { onBookNewAppointment, saveAnswers } from "@/actions/appointment";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
-import { useState } from "react";
-import { onBookNewAppointment } from "@/actions/appointment";
 
 export const usePortal = (
   customerId: string,
@@ -14,36 +14,52 @@ export const usePortal = (
     formState: { errors },
     handleSubmit,
   } = useForm();
-
   const { toast } = useToast();
   const [step, setStep] = useState<number>(1);
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>();
   const [selectedSlot, setSelectedSlot] = useState<string | undefined>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  setValue("data", date);
+  console.log("data", date);
+
+  setValue("date", date);
 
   const onNext = () => setStep((prev) => prev + 1);
+
   const onPrev = () => setStep((prev) => prev - 1);
 
   const onBookAppointment = handleSubmit(async (values) => {
+    console.log("values", values);
     try {
       setLoading(true);
-      const booked = await onBookNewAppointment(
-        domainId,
-        customerId,
-        values.slot,
-        values.date,
-        email
-      );
-      if (booked && booked.status == 200) {
+      const questions = Object.keys(values)
+        .filter((key) => key.startsWith("question"))
+        .reduce((obj: any, key) => {
+          obj[key.split("question-")[1]] = values[key];
+          return obj;
+        }, {});
+
+      const savedAnswers = await saveAnswers(questions, customerId);
+
+      if (savedAnswers) {
+        const booked = await onBookNewAppointment(
+          domainId,
+          customerId,
+          values.slot,
+          values.date,
+          email
+        );
+        if (booked && booked.status == 200) {
+          toast({
+            title: "Success",
+            description: booked.message,
+          });
+          setStep(3);
+        }
+
         setLoading(false);
-        toast({
-          title: "Success",
-          description: booked.message,
-        });
       }
-    } catch {}
+    } catch (error) {}
   });
 
   const onSelectedTimeSlot = (slot: string) => setSelectedSlot(slot);

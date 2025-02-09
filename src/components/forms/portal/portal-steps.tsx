@@ -56,7 +56,6 @@ const PortalSteps = ({
   amount,
   stripeId,
 }: Props) => {
-  console.log("step", step);
   if (step == 1) {
     return (
       <QuestionsForm

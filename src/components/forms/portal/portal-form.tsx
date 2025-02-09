@@ -53,18 +53,20 @@ const PortalForm = ({
   } = usePortal(customerId, domainid, email);
 
   useEffect(() => {
-    console.log("inside")
-    const allQuestionsAnswered = questions.every((question) => question.answered);
+    console.log("inside");
+    const allQuestionsAnswered = questions.every(
+      (question) => question.answered
+    );
     if (allQuestionsAnswered) {
       onNext();
     }
-  }, []); 
+  }, []);
 
   return (
     <form
       className="h-full flex flex-col gap-10 justify-center"
       onSubmit={(e) => {
-        e.preventDefault(); // Fix 2: Prevent default form submission
+        e.preventDefault();
         onBookAppointment();
       }}
     >

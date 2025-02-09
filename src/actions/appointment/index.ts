@@ -20,6 +20,7 @@ export const onDomainCustomerResponses = async (customerId: string) => {
         },
       },
     });
+
     if (customerQuestions) {
       return customerQuestions;
     }
@@ -55,6 +56,12 @@ export const onBookNewAppointment = async (
   date: string,
   email: string
 ) => {
+  console.log("domainId", domainId);
+  console.log("customerId", customerId);
+  console.log("slot", slot);
+  console.log("date", date);
+  console.log("email", email);
+
   try {
     const booking = await client.customer.update({
       where: {
