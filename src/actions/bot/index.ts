@@ -146,6 +146,7 @@ export const onAiChatBotAssistant = async (
             },
           });
           if (newCustomer) {
+            console.log("new customer made");
             const response = {
               role: "assistant",
               content: `Welcome aboard ${
@@ -210,34 +211,32 @@ export const onAiChatBotAssistant = async (
             {
               role: "assistant",
               content: `
-              You will receive an array of questions that you must ask the customer.
+              You will get an array of questions that you must ask the customer. 
               
-              Progress the conversation using only those questions.
+              Progress the conversation using those questions. 
               
-              Whenever you ask a question from the array, you must append the keyword "(complete)" at the end of the question. This keyword is extremely important—do not forget it.
-        
-              Only questions from the provided array should have this keyword. No other questions qualify for this condition.
-        
-              Always maintain character and remain respectful.
-        
-              The array of questions: [${chatBotDomain.filterQuestions
-                .map((question) => question.question)
+              Whenever you ask a question from the array i need you to add a keyword at the end of the question (complete) this keyword is extremely important. 
+              
+              Do not forget it.
+
+              only add this keyword when your asking a question from the array of questions. No other question satisfies this condition
+
+              Always maintain character and stay respectfull.
+
+              The array of questions : [${chatBotDomain.filterQuestions
+                .map((questions) => questions.question)
                 .join(", ")}]
-        
-              If the customer says something out of context or inappropriate, respond with: 
-              "This is beyond me. I will get a real user to continue the conversation."  
-              Then, append the keyword "(realtime)" at the end.
-        
-              If the customer agrees to book an appointment, send them this link:  
-              http://localhost:3000/portal/${id}/appointment/${
-                checkCustomer?.customer[0]?.id || ""
+
+              if the customer says something out of context or inapporpriate. Simply say this is beyond you and you will get a real user to continue the conversation. And add a keyword (realtime) at the end.
+
+              if the customer agrees to book an appointment send them this link http://localhost:3000/portal/${id}/appointment/${
+                checkCustomer?.customer[0].id
               }
-        
-              If the customer wants to buy a product, redirect them to the payment page:  
-              http://localhost:3000/portal/${id}/payment/${
-                checkCustomer?.customer[0]?.id || ""
+
+              if the customer wants to buy a product redirect them to the payment page http://localhost:3000/portal/${id}/payment/${
+                checkCustomer?.customer[0].id
               }
-            `,
+          `,
             },
             ...chat,
             {
@@ -245,7 +244,7 @@ export const onAiChatBotAssistant = async (
               content: message,
             },
           ],
-          model: "gpt-4o",
+          model: "gpt-3.5-turbo",
         });
 
         if (chatCompletion.choices[0].message.content?.includes("(realtime)")) {
@@ -344,14 +343,12 @@ export const onAiChatBotAssistant = async (
           {
             role: "assistant",
             content: `
-              You are a highly knowledgeable and experienced sales representative for ${chatBotDomain.name}, a company that offers a valuable product or service. 
-        
-              Your goal is to have a natural, human-like conversation with the customer to understand their needs, provide relevant information, and ultimately guide them toward making a purchase. If they haven’t provided all relevant information, redirect them to the appropriate link.
-        
-              Right now, you are speaking to a customer for the first time. Start by giving them a warm welcome on behalf of ${chatBotDomain.name} and making them feel comfortable.
-        
-              Your next task is to lead the conversation naturally to obtain the customer’s email address. Always be respectful and never break character.
-            `,
+            You are a highly knowledgeable and experienced sales representative for a ${chatBotDomain.name} that offers a valuable product or service. Your goal is to have a natural, human-like conversation with the customer in order to understand their needs, provide relevant information, and ultimately guide them towards making a purchase or redirect them to a link if they havent provided all relevant information.
+            Right now you are talking to a customer for the first time. Start by giving them a warm welcome on behalf of ${chatBotDomain.name} and make them feel welcomed.
+
+            Your next task is lead the conversation naturally to get the customers email address. Be respectful and never break character
+
+          `,
           },
           ...chat,
           {
@@ -359,8 +356,7 @@ export const onAiChatBotAssistant = async (
             content: message,
           },
         ],
-
-        model: "gpt-4o",
+        model: "gpt-3.5-turbo",
       });
 
       if (chatCompletion) {
