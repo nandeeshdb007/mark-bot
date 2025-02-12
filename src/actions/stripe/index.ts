@@ -4,7 +4,7 @@ import { client } from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET!, {
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!, {
   typescript: true,
   apiVersion: "2025-01-27.acacia",
 });

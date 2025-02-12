@@ -28,12 +28,7 @@ export const ACCEPTED_FILE_TYPES = ["image/png", "image/jpg", "image/jpeg"];
 export const AddDomainSchema = z.object({
   domain: z
     .string()
-    .min(4, { message: "A domain must have atleast 3 characters" })
-    .refine(
-      (value) =>
-        /^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\.)+[A-Za-z]{2,3}$/.test(value ?? ""),
-      "This is not a valid domain"
-    ),
+    .min(4, { message: "A domain must have atleast 3 characters" }),
   image: z
     .any()
     .refine((files) => files?.[0]?.size <= MAX_UPLOAD_SIZE, {
@@ -97,14 +92,14 @@ export const FilterQuestionsSchema = z.object({
 export const AddProductSchema = z.object({
   name: z
     .string()
-    .min(3, { message: 'The name must have atleast 3 characters' }),
+    .min(3, { message: "The name must have atleast 3 characters" }),
   image: z
     .any()
     .refine((files) => files?.[0]?.size <= MAX_UPLOAD_SIZE, {
-      message: 'Your file size must be less then 2MB',
+      message: "Your file size must be less then 2MB",
     })
     .refine((files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type), {
-      message: 'Only JPG, JPEG & PNG are accepted file formats',
+      message: "Only JPG, JPEG & PNG are accepted file formats",
     }),
   price: z.string(),
-})
+});
