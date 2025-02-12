@@ -19,6 +19,8 @@ import {
   onGetAllFilterQuestions,
 } from "@/actions/settings";
 import {
+  AddProductProps,
+  AddProductSchema,
   DomainSettingsProps,
   DomainSettingsSchema,
   FilterQuestionsProps,
@@ -28,7 +30,6 @@ import {
 } from "@/schemas/settings.schema";
 import { useRouter } from "next/navigation";
 import { upload } from "@/lib/utils";
-
 
 // export const useThemeMode = () => {
 //   const { setTheme, theme, resolvedTheme } = useTheme();
@@ -265,4 +266,42 @@ export const useFilterQuestion = (id: string) => {
     register,
     errors,
   };
+};
+
+export const useProducts = (domainId: string) => {
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const {
+    register,
+    reset,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<AddProductProps>({
+    resolver: zodResolver(AddProductSchema),
+  });
+
+  const onCreateNewProduct = handleSubmit(async (values) => {
+    try {
+      setLoading(true);
+      const uploaded = await upload.uploadFile(values.image[0]);
+      const product = await onCreateNewDomainProduct(
+        domainId,
+        values.name,
+        uploaded.uuid,
+        values.price
+      );
+      if (product) {
+        reset();
+        toast({
+          title: "Success",
+          description: product.message,
+        });
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  return { onCreateNewProduct, register, errors, loading };
 };
