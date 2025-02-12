@@ -17,6 +17,7 @@ import {
   onGetAllHelpDeskQuestions,
   onCreateFilterQuestions,
   onGetAllFilterQuestions,
+  onCreateNewDomainProduct,
 } from "@/actions/settings";
 import {
   AddProductProps,
