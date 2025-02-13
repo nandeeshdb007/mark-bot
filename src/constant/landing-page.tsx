@@ -11,21 +11,21 @@ export const pricingCards = [
     {
       title: 'Ultimate',
       description: 'The ultimate agency kit',
-      price: '$97',
-      duration: 'month',
+      price: '₹1500',
+      duration: 'yearly',
       highlight: 'Key features',
       features: [' Unlimited domain ', '500 Contacts', '500 Emails'],
   
-      priceId: 'price_1OYxkqFj9oKEERu1KfJGWxgN',
+      priceId: 'prod_RlTkOyRoUACRw8',
     },
     {
       title: 'Plus',
       description: 'For serious agency owners',
-      price: '$67',
-      duration: 'month',
+      price: '₹750',
+      duration: 'yearly',
       highlight: 'Everything in Starter, plus',
       features: [' 2 domain ', '50 contacts', '50 Emails per month'],
-      priceId: 'price_1OYxkqFj9oKEERu1NbKUxXxN',
+      priceId: 'prod_RlToJIn12Dy3mA',
     },
   ]
   

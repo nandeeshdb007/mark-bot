@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import { client } from "@/lib/prisma";
-import { onGetAllAccountDomains } from "../settings";
 import { currentUser, redirectToSignIn } from "@clerk/nextjs";
+import { onGetAllAccountDomains } from "../settings";
 
-export const onCompleteUserResgistration = async (
-  fullName: string,
+export const onCompleteUserRegistration = async (
+  fullname: string,
   clerkId: string,
   type: string
 ) => {
   try {
-    const registred = await client.user.create({
+    const registered = await client.user.create({
       data: {
-        fullname: fullName,
+        fullname,
         clerkId,
         type,
         subscription: {
@@ -27,25 +26,21 @@ export const onCompleteUserResgistration = async (
       },
     });
 
-    if (registred) {
-      return {
-        status: 200,
-        user: registred,
-      };
+    if (registered) {
+      return { status: 200, user: registered };
     }
-  } catch (error: any) {
-    return {
-      status: 400,
-    };
+  } catch {
+    return { status: 400 };
   }
 };
 
 export const onLoginUser = async () => {
   const user = await currentUser();
+  console.log("currentCuser",user)
   if (!user) redirectToSignIn();
   else {
     try {
-      const autenticated = await client.user.findUnique({
+      const authenticated = await client.user.findUnique({
         where: {
           clerkId: user.id,
         },
@@ -55,13 +50,12 @@ export const onLoginUser = async () => {
           type: true,
         },
       });
-
-      if (autenticated) {
+      if (authenticated) {
         const domains = await onGetAllAccountDomains();
-        return { status: 200, user: autenticated, domains: domains?.domains };
+        return { status: 200, user: authenticated, domain: domains?.domains };
       }
-    } catch (error) {
-      console.log("onLoginUser", error);
+    } catch {
+      return { status: 400 };
     }
   }
 };

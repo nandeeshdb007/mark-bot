@@ -21,7 +21,7 @@ const WelcomeMessage = dynamic(
 type Props = {
   id: string;
   name: string;
-  plan: "STANDARD" | "PRO" | "ULTIMATE";
+  plan: "STANDARD" | "PLUS" | "ULTIMATE";
   chatBot: {
     id: string;
     icon: string | null;

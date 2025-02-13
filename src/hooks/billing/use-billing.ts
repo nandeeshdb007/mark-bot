@@ -62,7 +62,7 @@ export const useStripeCustomer = (amount: number, stripeId: string) => {
 };
 
 export const useCompleteCustomerPayment = (onNext: () => void) => {
-  const [processing, setProcessing] = useState<boolean>(false);
+  const [PLUScessing, setPLUScessing] = useState<boolean>(false);
   const { toast } = useToast();
   const stripe = useStripeHook();
   const elements = useElements();
@@ -76,7 +76,7 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
     console.log("no reload");
 
     try {
-      setProcessing(true);
+      setPLUScessing(true);
 
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
@@ -98,18 +98,20 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
         onNext();
       }
 
-      setProcessing(false);
+      setPLUScessing(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { processing, onMakePayment };
+  return { PLUScessing, onMakePayment };
 };
 
-export const useSubscriptions = (plan: "STANDARD" | "PRO" | "ULTIMATE") => {
+export const useSubscriptions = (plan: "STANDARD" | "PLUS" | "ULTIMATE") => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [payment, setPayment] = useState<"STANDARD" | "PRO" | "ULTIMATE">(plan);
+  const [payment, setPayment] = useState<"STANDARD" | "PLUS" | "ULTIMATE">(
+    plan
+  );
   const { toast } = useToast();
   const router = useRouter();
   const onUpdatetToFreTier = async () => {
@@ -129,7 +131,7 @@ export const useSubscriptions = (plan: "STANDARD" | "PRO" | "ULTIMATE") => {
     }
   };
 
-  const onSetPayment = (payment: "STANDARD" | "PRO" | "ULTIMATE") =>
+  const onSetPayment = (payment: "STANDARD" | "PLUS" | "ULTIMATE") =>
     setPayment(payment);
 
   return {
@@ -140,11 +142,15 @@ export const useSubscriptions = (plan: "STANDARD" | "PRO" | "ULTIMATE") => {
   };
 };
 
-export const useStripeElements = (payment: "STANDARD" | "PRO" | "ULTIMATE") => {
+export const useStripeElements = (
+  payment: "STANDARD" | "PLUS" | "ULTIMATE"
+) => {
   const [stripeSecret, setStripeSecret] = useState<string>("");
   const [loadForm, setLoadForm] = useState<boolean>(false);
 
-  const onGetBillingIntent = async (plans: "STANDARD" | "PRO" | "ULTIMATE") => {
+  const onGetBillingIntent = async (
+    plans: "STANDARD" | "PLUS" | "ULTIMATE"
+  ) => {
     try {
       setLoadForm(true);
       const intent = await onGetStripeClientSecret(plans);
@@ -165,9 +171,9 @@ export const useStripeElements = (payment: "STANDARD" | "PRO" | "ULTIMATE") => {
 };
 
 export const useCompletePayment = (
-  payment: "STANDARD" | "PRO" | "ULTIMATE"
+  payment: "STANDARD" | "PLUS" | "ULTIMATE"
 ) => {
-  const [processing, setProcessing] = useState<boolean>(false);
+  const [PLUScessing, setPLUScessing] = useState<boolean>(false);
   const router = useRouter();
   const { toast } = useToast();
   const stripe = useStripeHook();
@@ -180,7 +186,7 @@ export const useCompletePayment = (
     }
 
     try {
-      setProcessing(true);
+      setPLUScessing(true);
 
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
@@ -204,12 +210,12 @@ export const useCompletePayment = (
         }
       }
 
-      setProcessing(false);
+      setPLUScessing(false);
       router.refresh();
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { processing, onMakePayment };
+  return { PLUScessing, onMakePayment };
 };

@@ -100,7 +100,7 @@ export const onIntegrateDomain = async (domain: string, icon: string) => {
       if (
         (subcription?.subscription?.plan == "STANDARD" &&
           subcription._count.domains < 1) ||
-        (subcription?.subscription?.plan == "PRO" &&
+        (subcription?.subscription?.plan == "PLUS" &&
           subcription._count.domains < 5) ||
         (subcription?.subscription?.plan == "ULTIMATE" &&
           subcription._count.domains < 10)
@@ -504,6 +504,30 @@ export const onCreateNewDomainProduct = async (
         status: 200,
         message: "Product successfully created",
       };
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const onGetSubscriptionPlan = async () => {
+  try {
+    const user = await currentUser();
+    if (!user) return;
+    const plan = await client.user.findUnique({
+      where: {
+        clerkId: user.id,
+      },
+      select: {
+        subscription: {
+          select: {
+            plan: true,
+          },
+        },
+      },
+    });
+    if (plan) {
+      return plan.subscription?.plan;
     }
   } catch (error) {
     console.log(error);

@@ -16,8 +16,8 @@ export const onCreateCustomerPaymentIntentSecret = async (
   try {
     const paymentIntent = await stripe.paymentIntents.create(
       {
-        currency: "usd",
-        amount: amount * 100,
+        currency: "inr",
+        amount: amount ,
         automatic_payment_methods: {
           enabled: true,
         },
@@ -34,7 +34,7 @@ export const onCreateCustomerPaymentIntentSecret = async (
 };
 
 export const onUpdateSubscription = async (
-  plan: "STANDARD" | "PRO" | "ULTIMATE"
+  plan: "STANDARD" | "PLUS" | "ULTIMATE"
 ) => {
   try {
     const user = await currentUser();
@@ -48,7 +48,7 @@ export const onUpdateSubscription = async (
           update: {
             data: {
               plan,
-              credits: plan == "PRO" ? 50 : plan == "ULTIMATE" ? 500 : 10,
+              credits: plan == "PLUS" ? 50 : plan == "ULTIMATE" ? 500 : 10,
             },
           },
         },
@@ -73,23 +73,23 @@ export const onUpdateSubscription = async (
   }
 };
 
-const setPlanAmount = (item: "STANDARD" | "PRO" | "ULTIMATE") => {
-  if (item == "PRO") {
-    return 1500;
+const setPlanAmount = (item: "STANDARD" | "PLUS" | "ULTIMATE") => {
+  if (item == "PLUS") {
+    return 700;
   }
   if (item == "ULTIMATE") {
-    return 3500;
+    return 1500;
   }
   return 0;
 };
 
 export const onGetStripeClientSecret = async (
-  item: "STANDARD" | "PRO" | "ULTIMATE"
+  item: "STANDARD" | "PLUS" | "ULTIMATE"
 ) => {
   try {
     const amount = setPlanAmount(item);
     const paymentIntent = await stripe.paymentIntents.create({
-      currency: "usd",
+      currency: "inr",
       amount: amount,
       automatic_payment_methods: {
         enabled: true,

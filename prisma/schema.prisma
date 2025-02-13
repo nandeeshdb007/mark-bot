@@ -163,7 +163,7 @@ model Product {
 
 enum Plans {
   STANDARD
-  PRO
+  PLUS
   ULTIMATE
 }
 

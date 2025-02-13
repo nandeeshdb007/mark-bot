@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
-import { onCompleteUserResgistration } from "@/actions/auth";
+import { onCompleteUserRegistration } from '@/actions/auth';
 
 export const useSignUpForm = () => {
   const { toast } = useToast();
@@ -66,7 +66,7 @@ export const useSignUpForm = () => {
         if (completeSignUp.status == "complete") {
           if (!signUp.createdUserId) return;
 
-          const registered = await onCompleteUserResgistration(
+          const registered = await onCompleteUserRegistration(
             values.fullName,
             signUp.createdUserId,
             values.type

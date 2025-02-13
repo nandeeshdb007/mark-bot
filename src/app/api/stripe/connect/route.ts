@@ -18,7 +18,7 @@ export async function GET() {
     // Create a Standard Connect account without auto-accepting ToS
     const account = await stripe.accounts.create({
       type: "standard",
-      country: "US",
+      country: "IN",
       business_type: "company",
       capabilities: {
         card_payments: { requested: true },
@@ -30,10 +30,10 @@ export async function GET() {
       },
       company: {
         address: {
-          city: "Fairfax",
+          city: "Banglore",
           line1: "123 State St",
-          postal_code: "22031",
-          state: "VA",
+          postal_code: "560056",
+          state: "KA",
         },
         tax_id: "000000000",
         name: "The Best Cookie Co",
