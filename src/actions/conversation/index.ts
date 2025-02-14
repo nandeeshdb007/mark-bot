@@ -1,6 +1,7 @@
-"use server"
-import { client } from "@/lib/prisma";
-// import { puhserSever } from "@/lib/utils";
+'use server'
+
+import { client } from '@/lib/prisma'
+import { pusherServer } from '@/lib/utils'
 
 export const onToggleRealtime = async (id: string, state: boolean) => {
   try {
@@ -15,20 +16,21 @@ export const onToggleRealtime = async (id: string, state: boolean) => {
         id: true,
         live: true,
       },
-    });
+    })
+
     if (chatRoom) {
       return {
         status: 200,
         message: chatRoom.live
-          ? "Realtime mode enabled"
-          : "Realtime mode disabled",
+          ? 'Realtime mode enabled'
+          : 'Realtime mode disabled',
         chatRoom,
-      };
+      }
     }
   } catch (error) {
-    console.log("onToggleRealtine", error);
+    console.log(error)
   }
-};
+}
 
 export const onGetConversationMode = async (id: string) => {
   try {
@@ -39,12 +41,13 @@ export const onGetConversationMode = async (id: string) => {
       select: {
         live: true,
       },
-    });
-    return mode;
+    })
+    console.log(mode)
+    return mode
   } catch (error) {
-    console.log("onGetConversationMode", error);
+    console.log(error)
   }
-};
+}
 
 export const onGetDomainChatRooms = async (id: string) => {
   try {
@@ -67,7 +70,7 @@ export const onGetDomainChatRooms = async (id: string) => {
                     seen: true,
                   },
                   orderBy: {
-                    createdAt: "desc",
+                    createdAt: 'desc',
                   },
                   take: 1,
                 },
@@ -76,14 +79,15 @@ export const onGetDomainChatRooms = async (id: string) => {
           },
         },
       },
-    });
+    })
+
     if (domains) {
-      return domains;
+      return domains
     }
   } catch (error) {
-    console.log("onGetDomainChatRooms", error);
+    console.log(error)
   }
-};
+}
 
 export const onGetChatMessages = async (id: string) => {
   try {
@@ -103,19 +107,21 @@ export const onGetChatMessages = async (id: string) => {
             seen: true,
           },
           orderBy: {
-            createdAt: "asc",
+            createdAt: 'asc',
           },
         },
       },
-    });
+    })
 
     if (messages) {
-      return messages;
+      return messages
     }
   } catch (error) {
-    console.log("onGetChatMessages", error);
+    console.log(error)
   }
-};
+}
+
+
 
 export const onViewUnReadMessages = async (id: string) => {
   try {
@@ -126,21 +132,36 @@ export const onViewUnReadMessages = async (id: string) => {
       data: {
         seen: true,
       },
-    });
+    })
   } catch (error) {
-    console.log("onViewUnReadMessages", error);
+    console.log(error)
   }
-};
+}
 
-export const onOwnwerSendMessage = async (
-  chatRoom: string,
+export const onRealTimeChat = async (
+  chatroomId: string,
   message: string,
-  role: "assistant" | "user"
+  id: string,
+  role: 'assistant' | 'user'
+) => {
+  pusherServer.trigger(chatroomId, 'realtime-mode', {
+    chat: {
+      message,
+      id,
+      role,
+    },
+  })
+}
+
+export const onOwnerSendMessage = async (
+  chatroom: string,
+  message: string,
+  role: 'assistant' | 'user'
 ) => {
   try {
     const chat = await client.chatRoom.update({
       where: {
-        id: chatRoom,
+        id: chatroom,
       },
       data: {
         message: {
@@ -160,35 +181,17 @@ export const onOwnwerSendMessage = async (
             seen: true,
           },
           orderBy: {
-            createdAt: "desc",
+            createdAt: 'desc',
           },
           take: 1,
         },
       },
-    });
+    })
 
     if (chat) {
-      return chat;
+      return chat
     }
   } catch (error) {
-    console.log("onOwnwerSendMessage", error);
+    console.log(error)
   }
-};
-
-// export const onRealTimeChat = async (
-//   chatRoomId: string,
-//   message: string,
-//   id: string,
-//   role: "assistant" | "user"
-// ) => {
-//   puhserSever.trigger(chatRoomId, "realtime-mode", {
-//     chat: {
-//       message,
-//       id,
-//       role,
-//     },
-//   });
-// };
-
-
-// export const onOwnwer 
+}

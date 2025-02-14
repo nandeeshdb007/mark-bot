@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import PusherClient from "pusher-js";
-import PusherSever from "pusher";
+import PusherServer from 'pusher'
 import { UploadClient } from "@uploadcare/upload-client";
 
 export function cn(...inputs: ClassValue[]) {
@@ -34,24 +34,6 @@ export const getMonthName = (month: number) => {
     : month == 12 && "Dec";
 };
 
-export const pusherClient = {};
-
-// new PusherClient(
-//   process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
-//   {
-//     cluster: "mt1",
-//   }
-// );
-
-export const puhserSever = {};
-//  new PusherSever({
-//   appId: process.env.PUSHER_APP_ID as string,
-//   key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
-//   secret: process.env.PUSHER_APP_SECRET as string,
-//   cluster: "mt1",
-//   useTLS: true,
-// });
-
 export const extractUUIDFromString = (url: string) => {
   return url.match(
     /^[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$/i
@@ -67,9 +49,24 @@ export const upload = new UploadClient({
 });
 
 export const extractEmailsFromString = (text: string) => {
-  return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi)
-}
+  return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+};
 
 export const extractURLfromString = (url: string) => {
-  return url.match(/https?:\/\/[^\s"<>]+/)
-}
+  return url.match(/https?:\/\/[^\s"<>]+/);
+};
+
+export const pusherServer = new PusherServer({
+  appId: process.env.NEXT_PUBLIC_PUSHER_APP_ID as string,
+  key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+  secret: process.env.NEXT_PUBLIC_PUSHER_APP_SECRET as string,
+  cluster: process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTOR as string,
+  useTLS: true,
+});
+
+export const pusherClient = new PusherClient(
+  process.env.NEXT_PUBLIC_PUSHER_APP_KEY as string,
+  {
+    cluster: process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTOR as string,
+  }
+);
