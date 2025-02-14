@@ -9,7 +9,7 @@ import { useFormContext } from "react-hook-form";
 const ButtonHandler = () => {
   const { currentStep, setCurrentStep } = useAuthContextHook();
   const { formState, getFieldState, getValues } = useFormContext();
-  const { onGeneratedOtp } = useSignUpForm();
+  const { onGenerateOTP } = useSignUpForm();
 
   const { isDirty: isName } = getFieldState("fullName", formState);
   const { isDirty: isEmail } = getFieldState("email", formState);
@@ -44,7 +44,7 @@ const ButtonHandler = () => {
             isEmail &&
             isPassword && {
               onClick: () =>
-                onGeneratedOtp(
+                onGenerateOTP(
                   getValues("email"),
                   getValues("password"),
                   setCurrentStep

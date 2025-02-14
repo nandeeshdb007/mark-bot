@@ -8,16 +8,15 @@ import { useSignUp } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { onCompleteUserRegistration } from "@/actions/auth";
 import { useToast } from "../use-toast";
-import { onCompleteUserRegistration } from '@/actions/auth';
 
 export const useSignUpForm = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const { signUp, isLoaded, setActive } = useSignUp();
   const router = useRouter();
-  const 
-  methods = useForm<UserRegistrationProps>({
+  const methods = useForm<UserRegistrationProps>({
     resolver: zodResolver(UserRegistrationSchema),
     defaultValues: {
       type: "owner",
@@ -25,7 +24,7 @@ export const useSignUpForm = () => {
     mode: "onChange",
   });
 
-  const onGeneratedOtp = async (
+  const onGenerateOTP = async (
     email: string,
     password: string,
     onNext: React.Dispatch<React.SetStateAction<number>>
@@ -99,7 +98,7 @@ export const useSignUpForm = () => {
   return {
     methods,
     onHandleSubmit,
-    onGeneratedOtp,
+    onGenerateOTP,
     loading,
   };
 };
