@@ -36,7 +36,6 @@ export const onCompleteUserRegistration = async (
 
 export const onLoginUser = async () => {
   const user = await currentUser();
-  console.log("currentCuser",user)
   if (!user) redirectToSignIn();
   else {
     try {
