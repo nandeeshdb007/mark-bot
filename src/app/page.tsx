@@ -1,19 +1,13 @@
-"use client";
-import { useUser } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { currentUser} from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const { isSignedIn } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (isSignedIn === true) {
-      router.push("/dashboard");
-    } else if (isSignedIn === false) {
-      router.push("/auth/sign-in");
-    }
-  }, []);
+export default async function Home() {
+  const user = await currentUser();
+  if (user) {
+    redirect("/dashboard");
+  } else {
+    redirect("/auth/sign-in");
+  }
 
   return null;
 }

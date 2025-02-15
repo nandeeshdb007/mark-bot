@@ -159,8 +159,8 @@ export const onBulkMailer = async (email: string[], campaignId: string) => {
         port: 465,
         secure: true,
         auth: {
-          user: process.env.NODE_MAILER_EMAIL,
-          pass: process.env.NODE_MAILER_GMAIL_APP_PASSWORD,
+          user: process.env.NODE_MAILER_EMAIL || 'markbotoffical@gmail.com',
+          pass: process.env.NODE_MAILER_GMAIL_APP_PASSWORD || 'vrlmddrhwnqvwzau',
         },
       });
 
