@@ -73,8 +73,8 @@ const SettingsForm = ({ id, name, chatBot }: Props) => {
               src="/images/bot-ui.png"
               className="sticky top-0"
               alt="bot-ui"
-              width={530}
-              height={769}
+              width={400}
+              height={400}
             />
           </div>
         </div>

@@ -65,7 +65,6 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
     },
     ref
   ) => {
-    console.log("chats", chats);
     return (
       <div className="h-full w-full flex flex-col bg-white rounded-xl  border overflow-hidden">
         <div className="flex justify-between px-4 pt-4">
