@@ -1,7 +1,6 @@
-
 import React from "react";
 
-import { LogOut, MonitorSmartphone } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { MenuLogo } from "@/icons/menu-logo";
 import MenuItem from "./menu-item";
 import DomainMenu from "./domain-menu";
@@ -45,11 +44,6 @@ export const MinMenu = ({
             label="Sign out"
             icon={<LogOut />}
             onSignOut={onSignOut}
-          />
-          <MenuItem
-            size="min"
-            label="Mobile App"
-            icon={<MonitorSmartphone />}
           />
         </div>
       </div>

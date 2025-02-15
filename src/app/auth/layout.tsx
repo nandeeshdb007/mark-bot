@@ -10,14 +10,7 @@ const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-screen flex w-full justify-center">
       <div className="w-[600px] l:w-full flex flex-col items-start p-6">
-        <Image
-          src="/images/logo.png"
-          alt="logo"
-          sizes="100vw"
-          style={{ width: "20%", height: "auto" }}
-          width={0}
-          height={0}
-        />
+       <p className="text-2xl font-semibold">Mark Bot</p>
         {children}
       </div>
       <div className="hidden lg:flex flex-1 w-full max-h-full max-w-[4000px] overflow-hidden relative bg-cream flex-col pt-10 pl-24 gap-3">
