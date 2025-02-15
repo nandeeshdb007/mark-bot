@@ -11,7 +11,6 @@ type Props = { params: { domain: string } };
 const DomainSettingsPage = async ({ params }: Props) => {
   const { domain } = await params;
   const currentDomain = await onGetCurrentDomainInfo(domain);
-  console.log("domain",currentDomain?.domains);
 
   if (!currentDomain) redirect("/dashboard");
 
