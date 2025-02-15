@@ -1,13 +1,13 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const { isSignedIn } = useUser();
   const router = useRouter();
 
-  useCallback(() => {
+  useEffect(() => {
     if (isSignedIn === true) {
       router.push("/dashboard");
     } else if (isSignedIn === false) {
@@ -15,5 +15,5 @@ export default function Home() {
     }
   }, []);
 
-  return <></>;
+  return null;
 }
