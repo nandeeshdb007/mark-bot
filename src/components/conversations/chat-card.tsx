@@ -1,20 +1,19 @@
-"use client";
-
-import { useChatTime } from "@/hooks/conversations/use-conversation";
-import { Card, CardContent, CardDescription } from "../ui/card";
-import { Avatar } from "../ui/avatar";
-import { AvatarFallback } from "@radix-ui/react-avatar";
-import { User } from "lucide-react";
-import { UrgentIcon } from "@/icons/urgent-icon";
+'use client'
+import React from 'react'
+import { Card, CardContent, CardDescription } from '../ui/card'
+import { Avatar, AvatarFallback } from '../ui/avatar'
+import { User } from 'lucide-react'
+import { UrgentIcon } from '@/icons/urgent-icon'
+import { useChatTime } from '@/hooks/conversations/use-conversation'
 
 type Props = {
-  title: string;
-  description?: string;
-  createdAt: Date;
-  id: string;
-  onChat(): void;
-  seen?: boolean;
-};
+  title: string
+  description?: string
+  createdAt: Date
+  id: string
+  onChat(): void
+  seen?: boolean
+}
 
 const ChatCard = ({
   title,
@@ -24,16 +23,17 @@ const ChatCard = ({
   id,
   seen,
 }: Props) => {
-  const { messageSentAt, urgent } = useChatTime(createdAt, id);
+  const { messageSentAt, urgent } = useChatTime(createdAt, id)
+
   return (
     <Card
       onClick={onChat}
-      className="rounded-none w-full border-r-0 hover:bg-muted cursor-pointer transition duration-150 ease-in-out"
+      className="rounded-none border-r-0 hover:bg-muted cursor-pointer transition duration-150 ease-in-out"
     >
       <CardContent className="py-4 flex gap-3">
         <div>
           <Avatar>
-            <AvatarFallback className=" w-8 h-8 rounded-full flex items-center justify-center">
+            <AvatarFallback className="bg-muted">
               <User />
             </AvatarFallback>
           </Avatar>
@@ -48,19 +48,19 @@ const ChatCard = ({
             </div>
             <CardDescription>
               {description
-                ? description.substring(0, 20) + "..."
-                : "This chatroom is empty"}
+                ? description.substring(0, 20) + '...'
+                : 'This chatroom is empty'}
             </CardDescription>
           </div>
           <div className="w-[100px] flex justify-end">
-            <CardDescription className="w-[100px] flex justify-end">
-              {createdAt ? messageSentAt : ""}
+            <CardDescription className="text-xs">
+              {createdAt ? messageSentAt : ''}
             </CardDescription>
           </div>
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default ChatCard;
+export default ChatCard
