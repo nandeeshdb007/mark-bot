@@ -28,11 +28,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <div className="w-full h-full bg-black opacity-100 items-center justify-center">
-            <div id="clerk-captcha" />
-          </div>
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           {children}
           <Toaster />
         </body>
