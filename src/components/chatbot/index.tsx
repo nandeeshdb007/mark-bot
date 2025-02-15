@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 "use client";
 import { useChatBot } from "@/hooks/chatbot/use-chatbot";
 import React from "react";
@@ -23,14 +24,14 @@ const AiChatBot = () => {
   } = useChatBot();
 
   return (
-    <div className="h-screen flex flex-col justify-end items-end gap-2">
+    <div className="h-screen flex flex-col justify-end items-end gap-4">
       {botOpened && (
         <BotWindow
           errors={errors}
           setChat={setOnChats}
           realtimeMode={onRealTime}
-          helpdesk={currentBot?.helpdesk ?? []}
-          domainName={currentBot?.name ?? ""}
+          helpdesk={currentBot?.helpdesk!}
+          domainName={currentBot?.name!}
           ref={messageWindowRef}
           help={currentBot?.chatBot?.helpdesk}
           theme={currentBot?.chatBot?.background}
@@ -43,13 +44,13 @@ const AiChatBot = () => {
       )}
       <div
         className={cn(
-          "rounded-full relative cursor-pointer shadow-md w-16 h-16 flex items-center justify-center bg-grandis",
+          "rounded-full relative cursor-pointer shadow-md w-20 h-20 flex items-center justify-center bg-grandis",
           loading ? "invisible" : "visible"
         )}
         onClick={onOpenChatBot}
       >
         {currentBot?.chatBot?.icon ? (
-            <Image
+          <Image
             src={`https://ucarecdn.com/${currentBot.chatBot.icon}/`}
             alt="bot"
             fill
