@@ -1,7 +1,6 @@
 import React from "react";
 import {
   FieldErrors,
-  FieldValue,
   FieldValues,
   UseFormRegister,
 } from "react-hook-form";

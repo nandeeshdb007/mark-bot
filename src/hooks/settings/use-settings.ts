@@ -3,7 +3,6 @@ import {
   ChangePasswordSchema,
 } from "@/schemas/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { useTheme } from "next-themes";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
 import { useEffect, useState } from "react";

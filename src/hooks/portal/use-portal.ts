@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { onBookNewAppointment, saveAnswers } from "@/actions/appointment";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "../use-toast";
-import { Toast } from "@/components/ui/toast";
 
 export const usePortal = (
   customerId: string,
@@ -28,7 +28,6 @@ export const usePortal = (
   const onPrev = () => setStep((prev) => prev - 1);
 
   const onBookAppointment = handleSubmit(async (values) => {
-    console.log("values", values);
     if (!values.slot) {
       toast({
         title: "Error",
@@ -70,7 +69,9 @@ export const usePortal = (
 
         setLoading(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("onBookAppointment",error)
+    }
   });
 
   const onSelectedTimeSlot = (slot: string) => setSelectedSlot(slot);

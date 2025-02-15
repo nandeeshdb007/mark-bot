@@ -57,7 +57,7 @@ const EmailMarketing = ({ campaign, domains, subscription }: Props) => {
   } = useEmailMarketing()
 
   return (
-    <div className="w-full flex-1 h-0 grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div className="w-full  flex-1 h-0 grid grid-cols-1 lg:grid-cols-2 gap-10">
       <CustomerTable
         domains={domains}
         onId={onSetAnswersId}

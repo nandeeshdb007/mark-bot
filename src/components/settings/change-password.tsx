@@ -6,9 +6,7 @@ import FormGenerator from "../forms/form-generator";
 import { Button } from "../ui/button";
 import { Loader } from "../loader";
 
-type Props = {};
-
-const ChangePassword = (props: Props) => {
+const ChangePassword = () => {
   const { register, errors, onChangePassword, loading } = useChangePassword();
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-10">

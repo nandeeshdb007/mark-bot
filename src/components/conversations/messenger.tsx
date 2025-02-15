@@ -2,15 +2,12 @@
 
 import { useChatWindow } from "@/hooks/conversations/use-conversation";
 import { Loader } from "../loader";
-import Bubbles from "../chatbot/bubble";
 import Bubble from "../chatbot/bubble";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Paperclip } from "lucide-react";
 
-type Props = {};
-
-const Messenger = (props: Props) => {
+const Messenger = () => {
   const {
     chatRoom,
     chats,
@@ -52,14 +49,12 @@ const Messenger = (props: Props) => {
                 placeholder="Type your message"
                 className="focus-visible:ring-0 flex-1 p-0 focus-visible:ring-offset-0 bg-muted rounded-non outline-none border-none"
               />
-              <Button
-                type="submit"
-                className="mt-3 px-7"
-                disabled={!chatRoom}
-              >Send</Button>
+              <Button type="submit" className="mt-3 px-7" disabled={!chatRoom}>
+                Send
+              </Button>
             </div>
             <span>
-                <Paperclip className="text-muted-foreground" />
+              <Paperclip className="text-muted-foreground" />
             </span>
           </form>
         </Loader>

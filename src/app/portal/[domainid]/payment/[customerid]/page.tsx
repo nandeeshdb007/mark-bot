@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
-import {
-  onDomainCustomerResponses,
-  onGetAllDomainBookings,
-} from "@/actions/appointment";
+import { onDomainCustomerResponses } from "@/actions/appointment";
 import { onGetDomainProductsAndConnectedAccountId } from "@/actions/payments";
 import PortalForm from "@/components/forms/portal/portal-form";
 import React from "react";

@@ -1,8 +1,8 @@
-'use server'
+"use server";
 
-import { client } from '@/lib/prisma'
-import { currentUser } from '@clerk/nextjs'
-import nodemailer from 'nodemailer'
+import { client } from "@/lib/prisma";
+import { currentUser } from "@clerk/nextjs";
+import nodemailer from "nodemailer";
 
 export const onGetAllCustomers = async (id: string) => {
   try {
@@ -33,13 +33,15 @@ export const onGetAllCustomers = async (id: string) => {
           },
         },
       },
-    })
+    });
 
     if (customers) {
-      return customers
+      return customers;
     }
-  } catch (error) {}
-}
+  } catch (error) {
+    console.log("onGetAllCustomers", error);
+  }
+};
 
 export const onGetAllCampaigns = async (id: string) => {
   try {
@@ -57,20 +59,20 @@ export const onGetAllCampaigns = async (id: string) => {
           },
         },
       },
-    })
+    });
 
     if (campaigns) {
-      return campaigns
+      return campaigns;
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const onCreateMarketingCampaign = async (name: string) => {
   try {
-    const user = await currentUser()
-    if (!user) return null
+    const user = await currentUser();
+    if (!user) return null;
 
     const campaign = await client.user.update({
       where: {
@@ -83,42 +85,42 @@ export const onCreateMarketingCampaign = async (name: string) => {
           },
         },
       },
-    })
+    });
 
     if (campaign) {
-      return { status: 200, message: 'You campaign was created' }
+      return { status: 200, message: "You campaign was created" };
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const onSaveEmailTemplate = async (
   template: string,
   campainId: string
 ) => {
   try {
-    const newTemplate = await client.campaign.update({
+    await client.campaign.update({
       where: {
         id: campainId,
       },
       data: {
         template,
       },
-    })
+    });
 
-    return { status: 200, message: 'Email template created' }
+    return { status: 200, message: "Email template created" };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const onAddCustomersToEmail = async (
   customers: string[],
   id: string
 ) => {
   try {
-    console.log(customers, id)
+    console.log(customers, id);
     const customerAdd = await client.campaign.update({
       where: {
         id,
@@ -126,18 +128,20 @@ export const onAddCustomersToEmail = async (
       data: {
         customers,
       },
-    })
+    });
 
     if (customerAdd) {
-      return { status: 200, message: 'Customer added to campaign' }
+      return { status: 200, message: "Customer added to campaign" };
     }
-  } catch (error) {}
-}
+  } catch (error) {
+    console.log("onAddCustomersToEmail", error);
+  }
+};
 
 export const onBulkMailer = async (email: string[], campaignId: string) => {
   try {
-    const user = await currentUser()
-    if (!user) return null
+    const user = await currentUser();
+    if (!user) return null;
 
     const template = await client.campaign.findUnique({
       where: {
@@ -147,32 +151,32 @@ export const onBulkMailer = async (email: string[], campaignId: string) => {
         name: true,
         template: true,
       },
-    })
+    });
 
     if (template && template.template) {
       const transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
+        host: "smtp.gmail.com",
         port: 465,
         secure: true,
         auth: {
           user: process.env.NODE_MAILER_EMAIL,
           pass: process.env.NODE_MAILER_GMAIL_APP_PASSWORD,
         },
-      })
+      });
 
       const mailOptions = {
         to: email,
         subject: template.name,
         text: JSON.parse(template.template),
-      }
+      };
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error)
+          console.log(error);
         } else {
-          console.log('Email sent: ' + info.response)
+          console.log("Email sent: " + info.response);
         }
-      })
+      });
 
       const creditsUsed = await client.user.update({
         where: {
@@ -185,20 +189,20 @@ export const onBulkMailer = async (email: string[], campaignId: string) => {
             },
           },
         },
-      })
+      });
       if (creditsUsed) {
-        return { status: 200, message: 'Campaign emails sent' }
+        return { status: 200, message: "Campaign emails sent" };
       }
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const onGetAllCustomerResponses = async (id: string) => {
   try {
-    const user = await currentUser()
-    if (!user) return null
+    const user = await currentUser();
+    if (!user) return null;
     const answers = await client.user.findUnique({
       where: {
         clerkId: user.id,
@@ -225,16 +229,15 @@ export const onGetAllCustomerResponses = async (id: string) => {
           },
         },
       },
-    })
+    });
 
     if (answers) {
-      return answers.domains
+      return answers.domains;
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-
+};
 
 export const onGetEmailTemplate = async (id: string) => {
   try {

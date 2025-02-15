@@ -62,7 +62,7 @@ export const useStripeCustomer = (amount: number, stripeId: string) => {
 };
 
 export const useCompleteCustomerPayment = (onNext: () => void) => {
-  const [PLUScessing, setPLUScessing] = useState<boolean>(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   const { toast } = useToast();
   const stripe = useStripeHook();
   const elements = useElements();
@@ -76,7 +76,7 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
     console.log("no reload");
 
     try {
-      setPLUScessing(true);
+      setProcessing(true);
 
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
@@ -98,13 +98,13 @@ export const useCompleteCustomerPayment = (onNext: () => void) => {
         onNext();
       }
 
-      setPLUScessing(false);
+      setProcessing(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { PLUScessing, onMakePayment };
+  return { processing, onMakePayment };
 };
 
 export const useSubscriptions = (plan: "STANDARD" | "PLUS" | "ULTIMATE") => {
@@ -173,7 +173,7 @@ export const useStripeElements = (
 export const useCompletePayment = (
   payment: "STANDARD" | "PLUS" | "ULTIMATE"
 ) => {
-  const [PLUScessing, setPLUScessing] = useState<boolean>(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   const router = useRouter();
   const { toast } = useToast();
   const stripe = useStripeHook();
@@ -186,7 +186,7 @@ export const useCompletePayment = (
     }
 
     try {
-      setPLUScessing(true);
+      setProcessing(true);
 
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
@@ -210,12 +210,12 @@ export const useCompletePayment = (
         }
       }
 
-      setPLUScessing(false);
+      setProcessing(false);
       router.refresh();
     } catch (error) {
       console.log(error);
     }
   };
 
-  return { PLUScessing, onMakePayment };
+  return { processing, onMakePayment };
 };
