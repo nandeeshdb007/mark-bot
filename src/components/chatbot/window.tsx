@@ -80,7 +80,7 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
             </Avatar>
             <div className="flex items-start flex-col">
               <h3 className="text-lg font-bold leading-none">
-                Sales Rep - Web Prodigies
+                Sales Rep 
               </h3>
               <p className="text-sm">{domainName.split(".com")[0]}</p>
               {realtimeMode?.mode && (
@@ -167,9 +167,6 @@ export const BotWindow = forwardRef<HTMLDivElement, Props>(
             </div>
           </TabsContent>
         </TabsMenu>
-        <div className="flex justify-center ">
-          <p className="text-gray-400 text-xs">Powered By Web Prodigies</p>
-        </div>
       </div>
     );
   }
