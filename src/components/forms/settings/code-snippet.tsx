@@ -14,6 +14,7 @@ const CodeSnippet = ({ id }: Props) => {
   const PRODUCTION_URL = process.env.NEXT_PUBLIC_PRODUCTION_URL as string;
 
   const snippet = `
+  <script>
 const iframe = document.createElement("iframe");
 
 const iframeStyles = (styleString) => {
@@ -57,6 +58,7 @@ window.addEventListener("message", (e) => {
   iframe.height = dimensions.height;
   iframe.contentWindow.postMessage("${id}", "https://mark-bot-one.vercel.app/");
 });
+</script>
 `;
 
   const handleCopy = async () => {
