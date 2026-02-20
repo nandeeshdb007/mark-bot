@@ -23,40 +23,39 @@ const iframeStyles = (styleString) => {
 };
 
 iframeStyles(\`
-  .chat-frame {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 100%;
-    max-width: 300px;
-    height: 100%;
-    max-height: 640px;
-    border: none;
-    border-radius: 12px;
-    overflow: hidden;
-    background-color: white;
-  }
-
-  @media (min-width: 1024px) {
-    .chat-frame {
-      max-width: 400px;
-      max-height: 640px;
-      margin-right: 60px;
+   .chat-frame {
+      position: fixed;
       bottom: 20px;
-    }
-  }
+      right: 20px;
+      width: 360px;
+      height: 640px;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: white;
+      z-index: 999999; /* VERY IMPORTANT */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+      @media (min-width: 1024px) {
+        .chat-frame {
+           width: 400px;
+          height: 640px;
+          margin-right: 60px;
+        }
+      }
 \`);
 
-iframe.src = "${PRODUCTION_URL}/chatbot";
+iframe.src = "https://mark-bot-one.vercel.app/chatbot";
 iframe.classList.add('chat-frame');
 document.body.appendChild(iframe);
 
 window.addEventListener("message", (e) => {
-  if (e.origin !== "${PRODUCTION_URL}") return;
+  if (e.origin !== "https://mark-bot-one.vercel.app") return;
   let dimensions = JSON.parse(e.data);
   iframe.width = dimensions.width;
   iframe.height = dimensions.height;
-  iframe.contentWindow.postMessage("${id}", "${PRODUCTION_URL}/");
+  iframe.contentWindow.postMessage("${id}", "https://mark-bot-one.vercel.app/");
 });
 `;
 
