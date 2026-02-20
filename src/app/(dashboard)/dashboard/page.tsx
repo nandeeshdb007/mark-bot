@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getUserAppointments } from "@/actions/appointment";
 import {
   getUserBalance,
@@ -15,6 +16,7 @@ import PersonIcon from "@/icons/person-icon";
 import { TransactionsIcon } from "@/icons/transactions-icon";
 import {  IndianRupee } from "lucide-react";
 import React from "react";
+
 
 const Page = async () => {
   const clients = await getUserClient();

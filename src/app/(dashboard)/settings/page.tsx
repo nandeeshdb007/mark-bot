@@ -1,7 +1,9 @@
+export const dynamic = "force-dynamic";
 import InfoBar from "@/components/infobar";
 import BillingsSettings from "@/components/settings/billings-settings";
 import ChangePassword from "@/components/settings/change-password";
 import React from "react";
+
 
 const SettingsPage = () => {
   return (
